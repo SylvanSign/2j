@@ -12,7 +12,7 @@ onready var reset_button = $CanvasLayer/ResetButton
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
-var logging_enabled := true
+var logging_enabled := false # TODO make this toggleable
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
@@ -43,13 +43,13 @@ func _on_ClientButton_pressed() -> void:
 func _on_network_peer_connected(peer_id: int):
 	message_label.text = "Connected!"
 	SyncManager.add_peer(peer_id)
-	
+
 	$ServerPlayer.set_network_master(1)
 	if get_tree().is_network_server():
 		$ClientPlayer.set_network_master(peer_id)
 	else:
 		$ClientPlayer.set_network_master(get_tree().get_network_unique_id())
-	
+
 	if get_tree().is_network_server():
 		message_label.text = "Starting..."
 		# Give a little time to get ping data.
@@ -73,12 +73,12 @@ func _on_ResetButton_pressed() -> void:
 
 func _on_SyncManager_sync_started() -> void:
 	message_label.text = "Started!"
-	
+
 	if logging_enabled and not SyncReplay.active:
 		var dir = Directory.new()
 		if not dir.dir_exists(LOG_FILE_DIRECTORY):
 			dir.make_dir(LOG_FILE_DIRECTORY)
-		
+
 		var datetime = OS.get_datetime(true)
 		var log_file_name = "%04d%02d%02d-%02d%02d%02d-peer-%d.log" % [
 			datetime['year'],
@@ -89,7 +89,7 @@ func _on_SyncManager_sync_started() -> void:
 			datetime['second'],
 			get_tree().get_network_unique_id(),
 		]
-		
+
 		SyncManager.start_logging(LOG_FILE_DIRECTORY + '/' + log_file_name)
 
 func _on_SyncManager_sync_stopped() -> void:
@@ -105,7 +105,7 @@ func _on_SyncManager_sync_regained() -> void:
 func _on_SyncManager_sync_error(msg: String) -> void:
 	message_label.text = "Fatal sync error: " + msg
 	sync_lost_label.visible = false
-	
+
 	var peer = get_tree().network_peer
 	if peer:
 		peer.close_connection()
