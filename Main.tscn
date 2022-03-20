@@ -124,10 +124,14 @@ __meta__ = {
 }
 
 [node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 229, 316 )
+position = Vector2( 100, 300 )
+fixed_position_x = 6553600
+fixed_position_y = 19660800
 
 [node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 769, 320 )
+position = Vector2( 924, 300 )
+fixed_position_x = 60555264
+fixed_position_y = 19660800
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/LocalButton" to="." method="_on_LocalButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/OnlineButton" to="." method="_on_OnlineButton_pressed"]

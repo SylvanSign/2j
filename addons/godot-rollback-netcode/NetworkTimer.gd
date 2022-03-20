@@ -40,9 +40,9 @@ func _network_process(_input: Dictionary) -> void:
 	if ticks_left <= 0:
 		_running = false
 		return
-	
+
 	ticks_left -= 1
-	
+
 	if ticks_left == 0:
 		if not one_shot:
 			ticks_left = wait_ticks
