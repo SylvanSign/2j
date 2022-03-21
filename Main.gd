@@ -9,10 +9,9 @@ onready var port_field = $CanvasLayer/ConnectionPanel/GridContainer/PortField
 onready var message_label = $CanvasLayer/MessageLabel
 onready var sync_lost_label = $CanvasLayer/SyncLostLabel
 onready var reset_button = $CanvasLayer/ResetButton
+onready var logging_checkbox: CheckBox = $CanvasLayer/LoggingCheckbox
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
-
-var logging_enabled := false # TODO make this toggleable
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
@@ -74,7 +73,7 @@ func _on_ResetButton_pressed() -> void:
 func _on_SyncManager_sync_started() -> void:
 	message_label.text = "Started!"
 
-	if logging_enabled and not SyncReplay.active:
+	if logging_checkbox.pressed and not SyncReplay.active:
 		var dir = Directory.new()
 		if not dir.dir_exists(LOG_FILE_DIRECTORY):
 			dir.make_dir(LOG_FILE_DIRECTORY)
@@ -93,7 +92,7 @@ func _on_SyncManager_sync_started() -> void:
 		SyncManager.start_logging(LOG_FILE_DIRECTORY + '/' + log_file_name)
 
 func _on_SyncManager_sync_stopped() -> void:
-	if logging_enabled:
+	if logging_checkbox.pressed:
 		SyncManager.stop_logging()
 
 func _on_SyncManager_sync_lost() -> void:

@@ -50,6 +50,10 @@ multirun/add_custom_args=true
 multirun/first_window_args="listen"
 multirun/other_window_args="join"
 
+[display]
+
+window/size/always_on_top=true
+
 [editor]
 
 main_run_args="listen"
@@ -119,6 +123,7 @@ player2_bomb={
 [network]
 
 rollback/classes/message_serializer="res://CustomMessageSerializer.gd"
+rollback/classes/hash_serializer="res://CustomHashSerializer.gd"
 rollback/debug/rollback_ticks=4
 rollback/debug/random_rollback_ticks=10
 rollback/log_inspector/replay_match_scene_path="res://Main.tscn"

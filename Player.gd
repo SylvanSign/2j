@@ -1,7 +1,7 @@
 extends SGKinematicBody2D
 
 const ONE := 65536*1
-const SPEED := 65536*10
+const SPEED := 65536*3
 const ACCELERATION := 65536*1
 const FRICTION := 65536/8
 
@@ -27,7 +27,7 @@ func _get_local_input() -> Dictionary:
 #	return input
 
 func _network_process(input: Dictionary) -> void:
-	var vector: SGFixedVector2 = input.get("input_vector", SGFixed.vector2(0, 0))
+	var vector: SGFixedVector2 = input.get("input_vector", ZERO)
 
 	velocity.iadd(vector.mul(ACCELERATION))
 	if velocity.length() > SPEED:
