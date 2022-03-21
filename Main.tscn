@@ -123,13 +123,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LoggingCheckbox" type="CheckBox" parent="CanvasLayer"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -120.0
-margin_bottom = 24.0
-text = "enable logging"
-
 [node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
 position = Vector2( 100, 300 )
 fixed_position_x = 6553600

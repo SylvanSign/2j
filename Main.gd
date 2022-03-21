@@ -2,6 +2,8 @@ extends Node2D
 
 const DummyNetworkAdaptor = preload("res://addons/godot-rollback-netcode/DummyNetworkAdaptor.gd")
 
+export(bool) var logging_enabled: = false
+
 onready var main_menu = $CanvasLayer/MainMenu
 onready var connection_panel = $CanvasLayer/ConnectionPanel
 onready var host_field = $CanvasLayer/ConnectionPanel/GridContainer/HostField
@@ -9,7 +11,6 @@ onready var port_field = $CanvasLayer/ConnectionPanel/GridContainer/PortField
 onready var message_label = $CanvasLayer/MessageLabel
 onready var sync_lost_label = $CanvasLayer/SyncLostLabel
 onready var reset_button = $CanvasLayer/ResetButton
-onready var logging_checkbox: CheckBox = $CanvasLayer/LoggingCheckbox
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
@@ -22,6 +23,14 @@ func _ready() -> void:
 	SyncManager.connect("sync_lost", self, "_on_SyncManager_sync_lost")
 	SyncManager.connect("sync_regained", self, "_on_SyncManager_sync_regained")
 	SyncManager.connect("sync_error", self, "_on_SyncManager_sync_error")
+
+	var args: = OS.get_cmdline_args()
+	if args.size() == 1:
+		match args[0]:
+			'listen':
+				_on_ServerButton_pressed()
+			'join':
+				_on_ClientButton_pressed()
 
 func _on_ServerButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
@@ -73,7 +82,7 @@ func _on_ResetButton_pressed() -> void:
 func _on_SyncManager_sync_started() -> void:
 	message_label.text = "Started!"
 
-	if logging_checkbox.pressed and not SyncReplay.active:
+	if logging_enabled and not SyncReplay.active:
 		var dir = Directory.new()
 		if not dir.dir_exists(LOG_FILE_DIRECTORY):
 			dir.make_dir(LOG_FILE_DIRECTORY)
@@ -92,7 +101,7 @@ func _on_SyncManager_sync_started() -> void:
 		SyncManager.start_logging(LOG_FILE_DIRECTORY + '/' + log_file_name)
 
 func _on_SyncManager_sync_stopped() -> void:
-	if logging_checkbox.pressed:
+	if logging_enabled:
 		SyncManager.stop_logging()
 
 func _on_SyncManager_sync_lost() -> void:
