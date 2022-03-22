@@ -1,7 +1,19 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+
+[sub_resource type="SGRectangleShape2D" id=1]
+extents_x = 33554432
+
+[sub_resource type="SGRectangleShape2D" id=2]
+extents_x = 19660800
+
+[sub_resource type="SGRectangleShape2D" id=3]
+extents_x = 19660800
+
+[sub_resource type="SGRectangleShape2D" id=4]
+extents_x = 33554432
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -93,12 +105,11 @@ size_flags_horizontal = 3
 text = "Client"
 
 [node name="MessageLabel" type="Label" parent="CanvasLayer"]
-anchor_right = 1.0
-margin_bottom = 14.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_top = 10.0
+margin_bottom = 24.0
 align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ResetButton" type="Button" parent="CanvasLayer"]
 anchor_left = 1.0
@@ -133,6 +144,62 @@ position = Vector2( 924, 300 )
 fixed_position_x = 60555264
 fixed_position_y = 19660800
 color = Color( 1, 0, 0, 1 )
+
+[node name="Arena" type="Node2D" parent="."]
+
+[node name="Walls" type="SGStaticBody2D" parent="Arena"]
+
+[node name="TopColor" type="ColorRect" parent="Arena/Walls"]
+margin_top = -10.0
+margin_right = 1024.0
+margin_bottom = 10.0
+color = Color( 0.623529, 0.427451, 0.0901961, 1 )
+
+[node name="TopCollisionShape" type="SGCollisionShape2D" parent="Arena/Walls"]
+position = Vector2( 512, 0 )
+fixed_position_x = 33554432
+shape = SubResource( 1 )
+
+[node name="LeftColor" type="ColorRect" parent="Arena/Walls"]
+margin_left = 10.0
+margin_right = 610.0
+margin_bottom = 20.0
+rect_rotation = 90.0
+color = Color( 0.623529, 0.427451, 0.0901961, 1 )
+
+[node name="LeftCollisionShape" type="SGCollisionShape2D" parent="Arena/Walls"]
+position = Vector2( 0, 300 )
+rotation = 1.57079
+fixed_rotation = 102943
+fixed_position_y = 19660800
+shape = SubResource( 2 )
+
+[node name="Rightcolor" type="ColorRect" parent="Arena/Walls"]
+margin_left = 1034.0
+margin_right = 1634.0
+margin_bottom = 20.0
+rect_rotation = 90.0
+color = Color( 0.623529, 0.427451, 0.0901961, 1 )
+
+[node name="RightCollisionShape" type="SGCollisionShape2D" parent="Arena/Walls"]
+position = Vector2( 1024, 300 )
+rotation = 1.57079
+fixed_rotation = 102943
+fixed_position_x = 67108864
+fixed_position_y = 19660800
+shape = SubResource( 3 )
+
+[node name="BotColor" type="ColorRect" parent="Arena/Walls"]
+margin_top = 590.0
+margin_right = 1024.0
+margin_bottom = 610.0
+color = Color( 0.623529, 0.427451, 0.0901961, 1 )
+
+[node name="BotCollisionShape" type="SGCollisionShape2D" parent="Arena/Walls"]
+position = Vector2( 512, 600 )
+fixed_position_x = 33554432
+fixed_position_y = 39321600
+shape = SubResource( 4 )
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/LocalButton" to="." method="_on_LocalButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/OnlineButton" to="." method="_on_OnlineButton_pressed"]
