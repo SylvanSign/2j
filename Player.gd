@@ -1,3 +1,4 @@
+tool
 extends SGKinematicBody2D
 
 const ONE := 65536*1
@@ -9,8 +10,12 @@ var ZERO     := SGFixedVector2.new()
 var velocity := SGFixedVector2.new()
 
 var input_prefix := "player1_"
+export(Color) var color
 
 var speed := 0.0
+
+func _draw() -> void:
+	draw_circle(Vector2.ZERO, 30, color)
 
 func _get_local_input() -> Dictionary:
 	var input_vector := Input.get_vector(input_prefix + "left", input_prefix + "right", input_prefix + "up", input_prefix + "down").normalized()

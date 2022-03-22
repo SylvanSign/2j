@@ -132,6 +132,7 @@ fixed_position_y = 19660800
 position = Vector2( 924, 300 )
 fixed_position_x = 60555264
 fixed_position_y = 19660800
+color = Color( 1, 0, 0, 1 )
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/LocalButton" to="." method="_on_LocalButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/OnlineButton" to="." method="_on_OnlineButton_pressed"]
