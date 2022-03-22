@@ -8,7 +8,7 @@ onready var main_menu = $CanvasLayer/MainMenu
 onready var connection_panel = $CanvasLayer/ConnectionPanel
 onready var host_field = $CanvasLayer/ConnectionPanel/GridContainer/HostField
 onready var port_field = $CanvasLayer/ConnectionPanel/GridContainer/PortField
-onready var message_label = $CanvasLayer/MessageLabel
+onready var message_label = $CanvasLayer/CenterContainer/MessageLabel
 onready var sync_lost_label = $CanvasLayer/SyncLostLabel
 onready var reset_button = $CanvasLayer/ResetButton
 
