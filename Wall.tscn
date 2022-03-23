@@ -1,0 +1,7 @@
+[gd_scene format=2]
+
+[node name="Wall" type="ColorRect"]
+margin_top = -10.0
+margin_right = 1024.0
+margin_bottom = 10.0
+color = Color( 0.145098, 0.141176, 0.133333, 1 )

@@ -3,11 +3,11 @@
 [ext_resource path="res://Player.gd" type="Script" id=2]
 
 [sub_resource type="SGCircleShape2D" id=1]
-radius = 1967172
+radius = 1310720
 
 [node name="Player" type="SGKinematicBody2D" groups=["network_sync"]]
 script = ExtResource( 2 )
-color = Color( 0, 1, 0.0392157, 1 )
+color = Color( 0, 0.188235, 0.286275, 1 )
 
 [node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="."]
 visible = false

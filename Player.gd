@@ -15,7 +15,7 @@ export(Color) var color
 var speed := 0.0
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, 30, color)
+	draw_circle(Vector2.ZERO, 20, color)
 
 func _get_local_input() -> Dictionary:
 	var input_vector := Input.get_vector(input_prefix + "left", input_prefix + "right", input_prefix + "up", input_prefix + "down").normalized()
