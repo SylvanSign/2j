@@ -3,7 +3,7 @@ extends SGKinematicBody2D
 
 const ONE := 65536*1
 const SPEED := 65536*10
-const ACCELERATION := 65536*1
+const ACCELERATION := 65536/2
 const FRICTION := 65536/8
 
 var ZERO     := SGFixedVector2.new()

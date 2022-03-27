@@ -276,19 +276,23 @@ shape = SubResource( 1 )
 visible = false
 position = Vector2( 512, 0 )
 rotation = -0.0174408
-scale = Vector2( 1, 1 )
+scale = Vector2( 0.999985, 0.999985 )
 fixed_rotation = -1143
 fixed_position_x = 33554432
+fixed_scale_x = 65535
+fixed_scale_y = 65535
 shape = SubResource( 1 )
 
 [node name="CenterCollisionShape" type="SGCollisionShape2D" parent="Arena/Walls"]
 visible = false
 position = Vector2( 512, 300 )
 rotation = 1.58824
-scale = Vector2( 1, 1 )
+scale = Vector2( 0.999985, 0.999985 )
 fixed_rotation = 104087
 fixed_position_x = 33554432
 fixed_position_y = 19660800
+fixed_scale_x = 65535
+fixed_scale_y = 65535
 shape = SubResource( 5 )
 
 [node name="CenterCollisionShape2" type="SGCollisionShape2D" parent="Arena/Walls"]
@@ -304,9 +308,11 @@ shape = SubResource( 5 )
 visible = false
 position = Vector2( 0, 300 )
 rotation = 1.58824
-scale = Vector2( 1, 1 )
+scale = Vector2( 0.999985, 0.999985 )
 fixed_rotation = 104087
 fixed_position_y = 19660800
+fixed_scale_x = 65535
+fixed_scale_y = 65535
 shape = SubResource( 6 )
 
 [node name="LeftCollisionShape2" type="SGCollisionShape2D" parent="Arena/Walls"]
@@ -321,10 +327,12 @@ shape = SubResource( 6 )
 visible = false
 position = Vector2( 1024, 300 )
 rotation = 1.58824
-scale = Vector2( 1, 1 )
+scale = Vector2( 0.999985, 0.999985 )
 fixed_rotation = 104087
 fixed_position_x = 67108864
 fixed_position_y = 19660800
+fixed_scale_x = 65535
+fixed_scale_y = 65535
 shape = SubResource( 3 )
 
 [node name="RightCollisionShape2" type="SGCollisionShape2D" parent="Arena/Walls"]
@@ -340,20 +348,24 @@ shape = SubResource( 3 )
 visible = false
 position = Vector2( 512, 600 )
 rotation = 0.0174408
-scale = Vector2( 1, 1 )
+scale = Vector2( 0.999985, 0.999985 )
 fixed_rotation = 1143
 fixed_position_x = 33554432
 fixed_position_y = 39321600
+fixed_scale_x = 65535
+fixed_scale_y = 65535
 shape = SubResource( 4 )
 
 [node name="BotCollisionShape2" type="SGCollisionShape2D" parent="Arena/Walls"]
 visible = false
 position = Vector2( 512, 600 )
 rotation = -0.0174408
-scale = Vector2( 1, 1 )
+scale = Vector2( 0.999985, 0.999985 )
 fixed_rotation = -1143
 fixed_position_x = 33554432
 fixed_position_y = 39321600
+fixed_scale_x = 65535
+fixed_scale_y = 65535
 shape = SubResource( 4 )
 
 [node name="Ball" parent="." instance=ExtResource( 3 )]
