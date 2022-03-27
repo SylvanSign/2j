@@ -1,10 +1,10 @@
 tool
 extends SGKinematicBody2D
 
-const ONE := 65536*1
-const SPEED := 65536*10
-const ACCELERATION := 65536/2
-const FRICTION := 65536/8
+const ONE          := 65536 * 1
+const SPEED        := 65536 * 10
+const ACCELERATION := 65536 * 3
+const FRICTION     := 65536 / 8
 
 var ZERO     := SGFixedVector2.new()
 var velocity := SGFixedVector2.new()
@@ -33,7 +33,6 @@ func _get_local_input() -> Dictionary:
 func _network_process(input: Dictionary) -> void:
 	var vector: SGFixedVector2 = input.get("input_vector", ZERO)
 
-	velocity.iadd(vector)
 	velocity.iadd(vector.mul(ACCELERATION))
 	if velocity.length() > SPEED:
 		velocity = velocity.normalized().mul(SPEED)
