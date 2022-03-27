@@ -61,7 +61,8 @@ func _on_network_peer_connected(peer_id: int):
 	if get_tree().is_network_server():
 		message_label.text = "Starting..."
 		# Give a little time to get ping data.
-		yield(get_tree().create_timer(2.0), "timeout")
+#		yield(get_tree().create_timer(2.0), "timeout")
+		yield(get_tree().create_timer(0.2), "timeout") # TODO should be 2.0 sec, like line above
 		SyncManager.start()
 
 func _on_network_peer_disconnected(peer_id: int):
