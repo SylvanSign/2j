@@ -12,7 +12,7 @@ var ZERO     := SGFixedVector2.new()
 var velocity := SGFixedVector2.new()
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, 20, color)
+	draw_circle(Vector2.ZERO, 15, color)
 
 func _network_process(input: Dictionary) -> void:
 	if velocity.length() > SPEED:

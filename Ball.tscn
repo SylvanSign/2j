@@ -3,7 +3,7 @@
 [ext_resource path="res://Ball.gd" type="Script" id=1]
 
 [sub_resource type="SGCircleShape2D" id=1]
-radius = 1310720
+radius = 983040
 
 [node name="Ball" type="SGKinematicBody2D" groups=["network_sync"]]
 collision_layer = 8
