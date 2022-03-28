@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Ball.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Goal.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Biscuit.tscn" type="PackedScene" id=5]
 
 [sub_resource type="SGRectangleShape2D" id=5]
 extents_x = 19660800
@@ -30,23 +32,15 @@ margin_right = 1024.0
 margin_bottom = 600.0
 color = Color( 0, 0.188235, 0.286275, 1 )
 
-[node name="LeftGoal" parent="." instance=ExtResource( 3 )]
+[node name="LeftGoal" parent="." instance=ExtResource( 4 )]
 position = Vector2( 90, 300 )
-scale = Vector2( 2, 2 )
 fixed_position_x = 5898240
 fixed_position_y = 19660800
-fixed_scale_x = 131072
-fixed_scale_y = 131072
-color = Color( 0, 0.313726, 0.478431, 1 )
 
-[node name="RightGoal" parent="." instance=ExtResource( 3 )]
-position = Vector2( 934, 299 )
-scale = Vector2( 2, 2 )
+[node name="LeftGoal2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 934, 300 )
 fixed_position_x = 61210624
-fixed_position_y = 19595264
-fixed_scale_x = 131072
-fixed_scale_y = 131072
-color = Color( 0, 0.313726, 0.478431, 1 )
+fixed_position_y = 19660800
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -276,32 +270,20 @@ fixed_position_x = 18677760
 fixed_position_y = 14548992
 color = Color( 0.968627, 0.498039, 0, 1 )
 
-[node name="Biscuit" parent="." instance=ExtResource( 3 )]
-position = Vector2( 512, 150 )
-scale = Vector2( 0.5, 0.5 )
+[node name="TopBiscuit" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 147.5 )
 fixed_position_x = 33554432
-fixed_position_y = 9830400
-fixed_scale_x = 32768
-fixed_scale_y = 32768
-color = Color( 0.917647, 0.886275, 0.717647, 1 )
+fixed_position_y = 9666560
 
-[node name="Biscuit2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 512, 300 )
-scale = Vector2( 0.5, 0.5 )
+[node name="MidBiscuit" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 295 )
 fixed_position_x = 33554432
-fixed_position_y = 19660800
-fixed_scale_x = 32768
-fixed_scale_y = 32768
-color = Color( 0.917647, 0.886275, 0.717647, 1 )
+fixed_position_y = 19333120
 
-[node name="Biscuit3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 512, 450 )
-scale = Vector2( 0.5, 0.5 )
+[node name="BotBiscuit" parent="." instance=ExtResource( 5 )]
+position = Vector2( 512, 442.5 )
 fixed_position_x = 33554432
-fixed_position_y = 29491200
-fixed_scale_x = 32768
-fixed_scale_y = 32768
-color = Color( 0.917647, 0.886275, 0.717647, 1 )
+fixed_position_y = 28999680
 
 [connection signal="pressed" from="CanvasLayer/MainMenu/LocalButton" to="." method="_on_LocalButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/MainMenu/OnlineButton" to="." method="_on_OnlineButton_pressed"]

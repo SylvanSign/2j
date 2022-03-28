@@ -3,13 +3,13 @@ extends SGKinematicBody2D
 
 export(Color) var color
 
-const EPSILON      := 65536 / 8
-const SPEED        := 65536 * 12
-const ACCELERATION := 65536 * 4
+const SPEED        := 65536 * 8
+const ACCELERATION := 65536 * 2
 const FRICTION     := 65536 / 4
 
-var ZERO     := SGFixedVector2.new()
-var velocity := SGFixedVector2.new()
+const EPSILON      := 65536 / 8
+var ZERO           := SGFixedVector2.new()
+var velocity       := SGFixedVector2.new()
 
 var input_prefix := "player1_"
 
