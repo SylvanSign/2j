@@ -6,6 +6,8 @@
 radius = 1310720
 
 [node name="Player" type="SGKinematicBody2D" groups=["network_sync"]]
+collision_layer = 4
+collision_mask = 27
 script = ExtResource( 2 )
 color = Color( 0, 0.188235, 0.286275, 1 )
 

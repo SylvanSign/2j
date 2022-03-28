@@ -118,6 +118,14 @@ player2_bomb={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="walls"
+2d_physics/layer_2="center"
+2d_physics/layer_3="player"
+2d_physics/layer_4="ball"
+2d_physics/layer_5="goals"
+
 [network]
 
 rollback/classes/message_serializer="res://CustomMessageSerializer.gd"

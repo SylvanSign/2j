@@ -4,12 +4,12 @@
 [ext_resource path="res://Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Ball.tscn" type="PackedScene" id=3]
 
-[sub_resource type="SGRectangleShape2D" id=1]
-extents_x = 33554432
-
 [sub_resource type="SGRectangleShape2D" id=5]
 extents_x = 19660800
 extents_y = 327680
+
+[sub_resource type="SGRectangleShape2D" id=1]
+extents_x = 33554432
 
 [sub_resource type="SGRectangleShape2D" id=6]
 extents_x = 19660800
@@ -168,28 +168,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 200, 300 )
-fixed_position_x = 13107200
-fixed_position_y = 19660800
-color = Color( 0.839216, 0.156863, 0.156863, 1 )
-
-[node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 824, 300 )
-fixed_position_x = 54001664
-fixed_position_y = 19660800
-color = Color( 0.839216, 0.156863, 0.156863, 1 )
-
 [node name="Arena" type="Node2D" parent="."]
 
-[node name="Walls" type="SGStaticBody2D" parent="Arena"]
+[node name="Center" type="SGStaticBody2D" parent="Arena"]
+collision_layer = 2
+collision_mask = 0
 
-[node name="CenterColor" type="ColorRect" parent="Arena/Walls"]
+[node name="CenterColor" type="ColorRect" parent="Arena/Center"]
 margin_left = 507.0
 margin_right = 517.0
 margin_bottom = 600.0
 rect_pivot_offset = Vector2( 0, 300 )
 color = Color( 0.352941, 0.352941, 0.352941, 1 )
+
+[node name="CenterCollisionShape" type="SGCollisionShape2D" parent="Arena/Center"]
+position = Vector2( 512, 300 )
+rotation = -1.57079
+scale = Vector2( 0.999985, 0.999985 )
+fixed_rotation = -102943
+fixed_position_x = 33554432
+fixed_position_y = 19660800
+fixed_scale_x = 65535
+fixed_scale_y = 65535
+shape = SubResource( 5 )
+
+[node name="Walls" type="SGStaticBody2D" parent="Arena"]
+collision_mask = 0
 
 [node name="TopColor" type="ColorRect" parent="Arena/Walls"]
 margin_top = -10.0
@@ -224,17 +228,6 @@ position = Vector2( 512, 0 )
 fixed_position_x = 33554432
 shape = SubResource( 1 )
 
-[node name="CenterCollisionShape" type="SGCollisionShape2D" parent="Arena/Walls"]
-position = Vector2( 512, 300 )
-rotation = -1.57079
-scale = Vector2( 0.999985, 0.999985 )
-fixed_rotation = -102943
-fixed_position_x = 33554432
-fixed_position_y = 19660800
-fixed_scale_x = 65535
-fixed_scale_y = 65535
-shape = SubResource( 5 )
-
 [node name="LeftCollisionShape" type="SGCollisionShape2D" parent="Arena/Walls"]
 position = Vector2( 0, 300 )
 rotation = -1.57079
@@ -264,6 +257,18 @@ fixed_position_y = 39321600
 fixed_scale_x = 65535
 fixed_scale_y = 65535
 shape = SubResource( 4 )
+
+[node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
+position = Vector2( 200, 300 )
+fixed_position_x = 13107200
+fixed_position_y = 19660800
+color = Color( 0.839216, 0.156863, 0.156863, 1 )
+
+[node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
+position = Vector2( 824, 300 )
+fixed_position_x = 54001664
+fixed_position_y = 19660800
+color = Color( 0.839216, 0.156863, 0.156863, 1 )
 
 [node name="Ball" parent="." instance=ExtResource( 3 )]
 position = Vector2( 285, 222 )
