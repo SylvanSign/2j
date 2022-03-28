@@ -4,7 +4,7 @@ extends SGKinematicBody2D
 export(Color) var color
 
 const NUM_SLIDES   := 4
-const SPEED        := 65536 * 8
+const SPEED        := 65536 * 10
 const ACCELERATION := 65536 * 2
 const FRICTION     := 65536 / 4
 
@@ -34,7 +34,6 @@ func _get_local_input() -> Dictionary:
 
 func _network_process(input: Dictionary) -> void:
 	var vector: SGFixedVector2 = input.get("input_vector", ZERO)
-
 	velocity.iadd(vector.mul(ACCELERATION))
 	if velocity.length() > SPEED:
 		velocity = velocity.normalized().mul(SPEED)
@@ -53,7 +52,7 @@ func _network_process(input: Dictionary) -> void:
 
 		if collision.collider.name == 'Ball':
 			# move the ball
-			(collision.collider as Ball).velocity.iadd(velocity)
+			(collision.collider as Ball).hit_me(velocity)
 
 		velocity = collision.remainder.slide(collision.normal)
 

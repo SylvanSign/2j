@@ -4,9 +4,11 @@ class_name Ball
 
 export(Color) var color
 
-const EPSILON      := 65536 / 32
-const SPEED        := 65536 * 24
-const FRICTION     := 65536 / 32
+const EPSILON        := 65536 / 32
+const SPEED          := 65536 * 32
+const FRICTION       := 65536 / 8
+const BOUNCE_LOSS    := 65536 * 1
+const HIT_MULTIPLIER := 65536 * 2
 
 var ZERO     := SGFixedVector2.new()
 var velocity := SGFixedVector2.new()
@@ -14,22 +16,24 @@ var velocity := SGFixedVector2.new()
 func _draw() -> void:
 	draw_circle(Vector2.ZERO, 15, color)
 
-func hit_me(velocity: SGFixedVector2) -> void:
-	velocity.iadd(velocity)
+func hit_me(hit_velocity: SGFixedVector2) -> void:
+	velocity.iadd(hit_velocity.mul(HIT_MULTIPLIER))
 	if velocity.length() > SPEED:
 		velocity = velocity.normalized().mul(SPEED)
 
 func _network_process(input: Dictionary) -> void:
+	var friction_vector: SGFixedVector2 = velocity.direction_to(ZERO).mul(FRICTION)
+	velocity.iadd(friction_vector)
 	if velocity.length() < EPSILON:
 		velocity.clear()
-	else:
-		var friction_vector: SGFixedVector2 = velocity.direction_to(ZERO).mul(FRICTION)
-		velocity.iadd(friction_vector)
 
 	var collision := move_and_collide(velocity)
 	if collision:
-		print('bouncing!')
 		velocity = velocity.bounce(collision.normal)
+		friction_vector = velocity.direction_to(ZERO).mul(BOUNCE_LOSS)
+		velocity.iadd(friction_vector)
+		if velocity.length() < EPSILON:
+			velocity.clear()
 
 func _save_state() -> Dictionary:
 	return {
