@@ -1,11 +1,13 @@
 tool
 extends SGKinematicBody2D
 
-export(Color) var color
+export(Color) var color := Color('d62828')
+
+onready var center := $Center
 
 const NUM_SLIDES   := 4
-const SPEED        := 65536 * 10
-const ACCELERATION := 65536 * 2
+const SPEED        := 65536 * 12
+const ACCELERATION := 65536 * 1
 const FRICTION     := 65536 / 4
 
 const EPSILON      := 65536 / 8
@@ -15,6 +17,10 @@ var velocity       := SGFixedVector2.new()
 var input_prefix := "player1_"
 
 var speed := 0.0
+
+func sync_to_physics_engine() -> void:
+	center.sync_to_physics_engine()
+	.sync_to_physics_engine()
 
 func _draw() -> void:
 	draw_circle(Vector2.ZERO, 15, color)

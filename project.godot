@@ -135,6 +135,7 @@ player2_bomb={
 2d_physics/layer_5="goal"
 2d_physics/layer_6="biscuit"
 2d_physics/layer_7="magnetic field"
+2d_physics/layer_8="player center"
 
 [network]
 

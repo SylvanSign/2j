@@ -115,13 +115,11 @@ shape = SubResource( 1 )
 position = Vector2( 340, 680 )
 fixed_position_x = 22282240
 fixed_position_y = 44564480
-color = Color( 0.839216, 0.156863, 0.156863, 1 )
 
 [node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
 position = Vector2( 626, 52 )
 fixed_position_x = 41025536
 fixed_position_y = 3407872
-color = Color( 0.839216, 0.156863, 0.156863, 1 )
 
 [node name="Ball" parent="." instance=ExtResource( 3 )]
 position = Vector2( 603, 89 )
