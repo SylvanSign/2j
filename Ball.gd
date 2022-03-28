@@ -1,12 +1,12 @@
 tool
 extends SGKinematicBody2D
+class_name Ball
 
 export(Color) var color
 
 const EPSILON      := 65536 / 32
-const SPEED        := 65536 * 12
-const ACCELERATION := 65536 * 4
-const FRICTION     := 65536 / 4
+const SPEED        := 65536 * 24
+const FRICTION     := 65536 / 32
 
 var ZERO     := SGFixedVector2.new()
 var velocity := SGFixedVector2.new()
@@ -26,7 +26,8 @@ func _network_process(input: Dictionary) -> void:
 
 	var collision := move_and_collide(velocity)
 	if collision:
-		print('I been hit!')
+		print('bouncing!')
+		velocity = velocity.bounce(collision.normal)
 
 func _save_state() -> Dictionary:
 	return {

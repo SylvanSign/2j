@@ -118,20 +118,20 @@ fixed_position_y = 44564480
 color = Color( 0.839216, 0.156863, 0.156863, 1 )
 
 [node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 340, 200 )
-fixed_position_x = 22282240
-fixed_position_y = 13107200
+position = Vector2( 626, 52 )
+fixed_position_x = 41025536
+fixed_position_y = 3407872
 color = Color( 0.839216, 0.156863, 0.156863, 1 )
 
 [node name="Ball" parent="." instance=ExtResource( 3 )]
-position = Vector2( 586, 788 )
-fixed_position_x = 38404096
-fixed_position_y = 51642368
+position = Vector2( 603, 89 )
+fixed_position_x = 39518208
+fixed_position_y = 5832704
 color = Color( 0.968627, 0.498039, 0, 1 )
 
 [node name="LeftBiscuit" parent="." instance=ExtResource( 5 )]
-position = Vector2( 180, 440 )
-fixed_position_x = 11796480
+position = Vector2( 170, 440 )
+fixed_position_x = 11141120
 fixed_position_y = 28835840
 
 [node name="MidBiscuit" parent="." instance=ExtResource( 5 )]
@@ -140,8 +140,8 @@ fixed_position_x = 22282240
 fixed_position_y = 28835840
 
 [node name="RightBiscuit" parent="." instance=ExtResource( 5 )]
-position = Vector2( 500, 440 )
-fixed_position_x = 32768000
+position = Vector2( 510, 440 )
+fixed_position_x = 33423360
 fixed_position_y = 28835840
 
 [node name="Menu" type="CanvasLayer" parent="."]

@@ -44,10 +44,13 @@ func _network_process(input: Dictionary) -> void:
 		velocity.clear()
 
 	var collision := move_and_collide(velocity)
-	if collision:
-		print(collision.collider.name)
+	if collision and collision.collider.name == 'Ball':
+		print('hit ball')
+		(collision.collider as Ball).velocity.iadd(velocity)
 
-	velocity = move_and_slide(velocity)
+		velocity = velocity.bounce(collision.normal)
+	else:
+		velocity = move_and_slide(velocity)
 
 func _save_state() -> Dictionary:
 	return {
