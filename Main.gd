@@ -4,13 +4,13 @@ const DummyNetworkAdaptor = preload("res://addons/godot-rollback-netcode/DummyNe
 
 export(bool) var logging_enabled: = false
 
-onready var main_menu = $CanvasLayer/MainMenu
-onready var connection_panel = $CanvasLayer/ConnectionPanel
-onready var host_field = $CanvasLayer/ConnectionPanel/GridContainer/HostField
-onready var port_field = $CanvasLayer/ConnectionPanel/GridContainer/PortField
-onready var message_label = $CanvasLayer/CenterContainer/MessageLabel
-onready var sync_lost_label = $CanvasLayer/SyncLostLabel
-onready var reset_button = $CanvasLayer/ResetButton
+onready var main_menu = $Menu/MainMenu
+onready var connection_panel = $Menu/ConnectionPanel
+onready var host_field = $Menu/ConnectionPanel/GridContainer/HostField
+onready var port_field = $Menu/ConnectionPanel/GridContainer/PortField
+onready var message_label = $Menu/CenterContainer/MessageLabel
+onready var sync_lost_label = $Menu/SyncLostLabel
+onready var reset_button = $Menu/ResetButton
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 

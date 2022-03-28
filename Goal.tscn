@@ -3,7 +3,7 @@
 [ext_resource path="res://Goal.gd" type="Script" id=1]
 
 [sub_resource type="SGCircleShape2D" id=1]
-radius = 2621440
+radius = 2293760
 
 [node name="Goal" type="SGArea2D"]
 collision_layer = 16
