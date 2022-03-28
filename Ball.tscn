@@ -5,7 +5,7 @@
 [sub_resource type="SGCircleShape2D" id=1]
 radius = 1310720
 
-[node name="Ball" type="SGKinematicBody2D"]
+[node name="Ball" type="SGKinematicBody2D" groups=["network_sync"]]
 script = ExtResource( 1 )
 
 [node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="."]

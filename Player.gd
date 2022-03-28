@@ -1,7 +1,9 @@
 tool
 extends SGKinematicBody2D
 
-const EPSILON      := 65536 / 32
+export(Color) var color
+
+const EPSILON      := 65536 / 8
 const SPEED        := 65536 * 12
 const ACCELERATION := 65536 * 4
 const FRICTION     := 65536 / 4
@@ -10,7 +12,6 @@ var ZERO     := SGFixedVector2.new()
 var velocity := SGFixedVector2.new()
 
 var input_prefix := "player1_"
-export(Color) var color
 
 var speed := 0.0
 
@@ -37,11 +38,14 @@ func _network_process(input: Dictionary) -> void:
 	if velocity.length() > SPEED:
 		velocity = velocity.normalized().mul(SPEED)
 
+	var friction_vector := velocity.direction_to(ZERO).mul(FRICTION)
+	velocity.iadd(friction_vector)
 	if velocity.length() < EPSILON:
 		velocity.clear()
-	else:
-		var friction_vector: SGFixedVector2 = velocity.direction_to(ZERO).mul(FRICTION)
-		velocity.iadd(friction_vector)
+
+	var collision := move_and_collide(velocity)
+	if collision:
+		print(collision.collider.name)
 
 	velocity = move_and_slide(velocity)
 

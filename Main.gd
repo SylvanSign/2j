@@ -24,13 +24,16 @@ func _ready() -> void:
 	SyncManager.connect("sync_regained", self, "_on_SyncManager_sync_regained")
 	SyncManager.connect("sync_error", self, "_on_SyncManager_sync_error")
 
-	var args: = OS.get_cmdline_args()
-	if args.size() == 1:
-		match args[0]:
-			'listen':
-				_on_ServerButton_pressed()
-			'join':
-				_on_ClientButton_pressed()
+	if OS.has_feature("editor"):
+		var args: = OS.get_cmdline_args()
+		if args.size() == 1:
+			match args[0]:
+				'listen':
+					_on_ServerButton_pressed()
+				'join':
+					_on_ClientButton_pressed()
+		else:
+			_on_LocalButton_pressed()
 
 func _on_ServerButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
