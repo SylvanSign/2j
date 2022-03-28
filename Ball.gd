@@ -14,10 +14,12 @@ var velocity := SGFixedVector2.new()
 func _draw() -> void:
 	draw_circle(Vector2.ZERO, 15, color)
 
-func _network_process(input: Dictionary) -> void:
+func hit_me(velocity: SGFixedVector2) -> void:
+	velocity.iadd(velocity)
 	if velocity.length() > SPEED:
 		velocity = velocity.normalized().mul(SPEED)
 
+func _network_process(input: Dictionary) -> void:
 	if velocity.length() < EPSILON:
 		velocity.clear()
 	else:

@@ -3,6 +3,7 @@ extends SGKinematicBody2D
 
 export(Color) var color
 
+const NUM_SLIDES   := 4
 const SPEED        := 65536 * 8
 const ACCELERATION := 65536 * 2
 const FRICTION     := 65536 / 4
@@ -43,14 +44,18 @@ func _network_process(input: Dictionary) -> void:
 	if velocity.length() < EPSILON:
 		velocity.clear()
 
-	var collision := move_and_collide(velocity)
-	if collision and collision.collider.name == 'Ball':
-		print('hit ball')
-		(collision.collider as Ball).velocity.iadd(velocity)
+	var collision: SGKinematicCollision2D
+	for _i in range(NUM_SLIDES):
+		collision = move_and_collide(velocity)
 
-		velocity = velocity.bounce(collision.normal)
-	else:
-		velocity = move_and_slide(velocity)
+		if not collision:
+			break
+
+		if collision.collider.name == 'Ball':
+			# move the ball
+			(collision.collider as Ball).velocity.iadd(velocity)
+
+		velocity = collision.remainder.slide(collision.normal)
 
 func _save_state() -> Dictionary:
 	return {
