@@ -5,7 +5,7 @@ class_name Ball
 export(Color) var color
 
 const EPSILON        := 65536 / 32
-const SPEED          := 65536 * 32
+const SPEED          := 65536 * 24
 const FRICTION       := 65536 / 8
 const BOUNCE_LOSS    := 65536 * 1
 const HIT_MULTIPLIER := 65536 * 2
