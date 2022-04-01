@@ -11,6 +11,8 @@ onready var port_field = $Menu/ConnectionPanel/GridContainer/PortField
 onready var message_label = $Menu/CenterContainer/MessageLabel
 onready var sync_lost_label = $Menu/SyncLostLabel
 onready var reset_button = $Menu/ResetButton
+onready var server_player = $ServerPlayer
+onready var center_line = $Arena/Center/CenterColor
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
@@ -133,7 +135,9 @@ func _on_OnlineButton_pressed() -> void:
 	SyncManager.reset_network_adaptor()
 
 func _on_LocalButton_pressed() -> void:
-	$ClientPlayer.input_prefix = "player2_"
+	server_player.set_collision_mask_bit(1, false)
+	center_line.visible = false
+	$ClientPlayer.queue_free()
 	main_menu.visible = false
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()

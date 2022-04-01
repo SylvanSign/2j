@@ -7,10 +7,10 @@ onready var center := $Center
 
 const NUM_SLIDES   := 4
 const SPEED        := 65536 * 16
-const ACCELERATION := 65536 / 8 * 6
-const FRICTION     := 65536 / 8
+const ACCELERATION := 65536 * 6
+const FRICTION     := 65536 * 2
 
-const EPSILON      := 65536 / 8
+const EPSILON      := 65536 / 1
 var ZERO           := SGFixedVector2.new()
 var velocity       := SGFixedVector2.new()
 
@@ -58,9 +58,9 @@ func _network_process(input: Dictionary) -> void:
 
 		if collision.collider.name == 'Ball':
 			# move the ball
-			(collision.collider as Ball).hit_me(velocity.reflect(collision.normal))
+			(collision.collider as Ball).hit_me(velocity.reflect(collision.normal.normalized()))
 
-		velocity = collision.remainder.slide(collision.normal)
+		velocity = collision.remainder.slide(collision.normal.normalized())
 
 func _save_state() -> Dictionary:
 	return {

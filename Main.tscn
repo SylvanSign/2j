@@ -116,14 +116,14 @@ fixed_position_x = 22282240
 fixed_position_y = 44564480
 
 [node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 626, 52 )
-fixed_position_x = 41025536
-fixed_position_y = 3407872
+position = Vector2( 340, 200 )
+fixed_position_x = 22282240
+fixed_position_y = 13107200
 
 [node name="Ball" parent="." instance=ExtResource( 3 )]
-position = Vector2( 603, 89 )
-fixed_position_x = 39518208
-fixed_position_y = 5832704
+position = Vector2( 340, 550 )
+fixed_position_x = 22282240
+fixed_position_y = 36044800
 color = Color( 0.968627, 0.498039, 0, 1 )
 
 [node name="LeftBiscuit" parent="." instance=ExtResource( 5 )]
