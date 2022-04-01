@@ -58,7 +58,7 @@ func _network_process(input: Dictionary) -> void:
 
 		if collision.collider.name == 'Ball':
 			# move the ball
-			(collision.collider as Ball).hit_me(velocity)
+			(collision.collider as Ball).hit_me(velocity.reflect(collision.normal))
 
 		velocity = collision.remainder.slide(collision.normal)
 

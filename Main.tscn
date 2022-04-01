@@ -39,11 +39,10 @@ collision_layer = 2
 collision_mask = 0
 
 [node name="CenterColor" type="ColorRect" parent="Arena/Center"]
-visible = false
-margin_top = 435.0
+margin_top = 439.0
 margin_right = 680.0
-margin_bottom = 445.0
-color = Color( 0.352941, 0.352941, 0.352941, 1 )
+margin_bottom = 441.0
+color = Color( 1, 1, 1, 0.392157 )
 
 [node name="CenterCollisionShape" type="SGCollisionShape2D" parent="Arena/Center"]
 position = Vector2( 340, 440 )
