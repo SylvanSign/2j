@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "SGKinematicBody2D",
-"class": "Ball",
-"language": "GDScript",
-"path": "res://Ball.gd"
-}, {
 "base": "AnimationPlayer",
 "class": "NetworkAnimationPlayer",
 "language": "GDScript",
@@ -28,12 +23,17 @@ _global_script_classes=[ {
 "class": "NetworkTimer",
 "language": "GDScript",
 "path": "res://addons/godot-rollback-netcode/NetworkTimer.gd"
+}, {
+"base": "SGKinematicBody2D",
+"class": "Piece",
+"language": "GDScript",
+"path": "res://Piece.gd"
 } ]
 _global_script_class_icons={
-"Ball": "",
 "NetworkAnimationPlayer": "",
 "NetworkRandomNumberGenerator": "",
-"NetworkTimer": ""
+"NetworkTimer": "",
+"Piece": ""
 }
 
 [application]

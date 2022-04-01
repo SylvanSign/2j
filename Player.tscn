@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=2]
 
@@ -8,10 +8,15 @@ radius = 983040
 [sub_resource type="SGCircleShape2D" id=2]
 radius = 65536
 
+[sub_resource type="SGCircleShape2D" id=3]
+radius = 3932160
+
 [node name="Player" type="SGKinematicBody2D" groups=["network_sync"]]
 collision_layer = 4
 collision_mask = 11
 script = ExtResource( 2 )
+color = Color( 0.839216, 0.156863, 0.156863, 1 )
+radius = 983040
 
 [node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -22,3 +27,10 @@ collision_mask = 16
 
 [node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Center"]
 shape = SubResource( 2 )
+
+[node name="MagneticField" type="SGArea2D" parent="."]
+collision_layer = 64
+collision_mask = 32
+
+[node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="MagneticField"]
+shape = SubResource( 3 )

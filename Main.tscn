@@ -129,21 +129,23 @@ fixed_position_y = 28835840
 position = Vector2( 340, 550 )
 fixed_position_x = 22282240
 fixed_position_y = 36044800
-color = Color( 0.968627, 0.498039, 0, 1 )
 
 [node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 340, 680 )
+position = Vector2( 340, 650 )
 fixed_position_x = 22282240
-fixed_position_y = 44564480
+fixed_position_y = 42598400
+color = Color( 0.839216, 0.156863, 0.156863, 1 )
 
 [node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 340, 200 )
+position = Vector2( 340, 230 )
 fixed_position_x = 22282240
-fixed_position_y = 13107200
+fixed_position_y = 15073280
+color = Color( 0.839216, 0.156863, 0.156863, 1 )
 
 [node name="Menu" type="CanvasLayer" parent="."]
 
 [node name="MainMenu" type="HBoxContainer" parent="Menu"]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

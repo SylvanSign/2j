@@ -6,7 +6,10 @@
 
 [node name="Biscuit" type="SGKinematicBody2D"]
 collision_layer = 32
+collision_mask = 9
 script = ExtResource( 1 )
+color = Color( 0.917647, 0.886275, 0.717647, 1 )
+radius = 655360
 
 [node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource( 1 )

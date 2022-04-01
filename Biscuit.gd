@@ -1,7 +1,8 @@
 tool
-extends SGKinematicBody2D
+extends Piece
 
-export(Color) var color := Color('eae2b7')
-
-func _draw() -> void:
-	draw_circle(Vector2.ZERO, 10, color)
+#func _ready() -> void:
+#	speed          = 65536 * 24
+#	friction       = 65536 / 8
+#	bounce_loss    = 65536 * 1
+#	hit_multiplier = 65536 * 2
