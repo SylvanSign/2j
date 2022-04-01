@@ -134,13 +134,11 @@ fixed_position_y = 36044800
 position = Vector2( 340, 650 )
 fixed_position_x = 22282240
 fixed_position_y = 42598400
-color = Color( 0.839216, 0.156863, 0.156863, 1 )
 
 [node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
 position = Vector2( 340, 230 )
 fixed_position_x = 22282240
 fixed_position_y = 15073280
-color = Color( 0.839216, 0.156863, 0.156863, 1 )
 
 [node name="Menu" type="CanvasLayer" parent="."]
 

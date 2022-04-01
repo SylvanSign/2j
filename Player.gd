@@ -24,7 +24,6 @@ func _get_local_input() -> Dictionary:
 	if input_vector != Vector2.ZERO:
 		input["input_vector"] = SGFixed.from_float_vector2(input_vector)
 
-	print(input)
 	return input
 
 func _network_process(input: Dictionary) -> void:
