@@ -39,7 +39,8 @@ func _network_process(input: Dictionary) -> void:
 			break
 
 		# possibly bounce the other object
-		if collision.collider.name != 'Walls':
+		var hit_name: String = collision.collider.name
+		if not (hit_name == 'Walls' or hit_name == 'Center'):
 			collision.collider.hit_me(velocity.reflect(collision.normal.normalized()))
 
 		if bouncy:
