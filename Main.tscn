@@ -110,22 +110,6 @@ fixed_position_x = 22282240
 fixed_position_y = 57016320
 shape = SubResource( 1 )
 
-[node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 340, 680 )
-fixed_position_x = 22282240
-fixed_position_y = 44564480
-
-[node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 340, 200 )
-fixed_position_x = 22282240
-fixed_position_y = 13107200
-
-[node name="Ball" parent="." instance=ExtResource( 3 )]
-position = Vector2( 340, 550 )
-fixed_position_x = 22282240
-fixed_position_y = 36044800
-color = Color( 0.968627, 0.498039, 0, 1 )
-
 [node name="LeftBiscuit" parent="." instance=ExtResource( 5 )]
 position = Vector2( 170, 440 )
 fixed_position_x = 11141120
@@ -140,6 +124,22 @@ fixed_position_y = 28835840
 position = Vector2( 510, 440 )
 fixed_position_x = 33423360
 fixed_position_y = 28835840
+
+[node name="Ball" parent="." instance=ExtResource( 3 )]
+position = Vector2( 340, 550 )
+fixed_position_x = 22282240
+fixed_position_y = 36044800
+color = Color( 0.968627, 0.498039, 0, 1 )
+
+[node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
+position = Vector2( 340, 680 )
+fixed_position_x = 22282240
+fixed_position_y = 44564480
+
+[node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
+position = Vector2( 340, 200 )
+fixed_position_x = 22282240
+fixed_position_y = 13107200
 
 [node name="Menu" type="CanvasLayer" parent="."]
 
