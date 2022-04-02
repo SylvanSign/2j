@@ -111,12 +111,12 @@ fixed_position_x = 22282240
 fixed_position_y = 57016320
 shape = SubResource( 1 )
 
-[node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
+[node name="BotPlayer" parent="." instance=ExtResource( 2 )]
 position = Vector2( 340, 650 )
 fixed_position_x = 22282240
 fixed_position_y = 42598400
 
-[node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
+[node name="TopPlayer" parent="." instance=ExtResource( 2 )]
 position = Vector2( 340, 230 )
 fixed_position_x = 22282240
 fixed_position_y = 15073280

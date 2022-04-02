@@ -1,8 +1,8 @@
 extends "res://addons/godot-rollback-netcode/MessageSerializer.gd"
 
 const input_path_mapping := {
-	'/root/Main/ServerPlayer': 1,
-	'/root/Main/ClientPlayer': 2,
+	'/root/Main/BotPlayer': 1,
+	'/root/Main/TopPlayer': 2,
 }
 
 enum HeaderFlags {
@@ -52,16 +52,14 @@ func unserialize_input(serialized: PoolByteArray) -> Dictionary:
 	all_input['$'] = buffer.get_u32()
 
 	var input_count = buffer.get_u8()
-	if input_count == 0:
-		return all_input
+	for i in input_count:
+		var path: String = input_path_mapping_reverse[buffer.get_u8()]
+		var input: = {}
 
-	var path = input_path_mapping_reverse[buffer.get_u8()]
-	var input := {}
+		var header = buffer.get_u8()
+		if header & HeaderFlags.HAS_INPUT_VECTOR:
+			input["input_vector"] = SGFixed.vector2(buffer.get_64(), buffer.get_64())
 
-	var header = buffer.get_u8()
-	if header & HeaderFlags.HAS_INPUT_VECTOR:
-		input["input_vector"] = SGFixed.vector2(buffer.get_64(), buffer.get_64())
+		all_input[path] = input
 
-
-	all_input[path] = input
 	return all_input

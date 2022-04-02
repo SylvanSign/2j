@@ -11,16 +11,11 @@ onready var port_field = $Menu/ConnectionPanel/GridContainer/PortField
 onready var message_label = $Menu/CenterContainer/MessageLabel
 onready var sync_lost_label = $Menu/SyncLostLabel
 onready var reset_button = $Menu/ResetButton
-onready var server_player = $ServerPlayer
 onready var center_line = $Arena/Center/CenterColor
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
 func _ready() -> void:
-	var players = [$ServerPlayer, $ClientPlayer]
-	$LeftBiscuit.players = players
-	$MidBiscuit.players = players
-	$RightBiscuit.players = players
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
 	get_tree().connect("network_peer_disconnected", self, "_on_network_peer_disconnected")
 	get_tree().connect("server_disconnected", self, "_on_server_disconnected")
@@ -38,8 +33,15 @@ func _ready() -> void:
 					_on_ServerButton_pressed()
 				'join':
 					_on_ClientButton_pressed()
+			init_biscuits([$BotPlayer, $TopPlayer])
 		else:
+			init_biscuits([$BotPlayer])
 			_on_LocalButton_pressed()
+
+func init_biscuits(players: Array) -> void:
+	$LeftBiscuit.players = players
+	$MidBiscuit.players = players
+	$RightBiscuit.players = players
 
 func _on_ServerButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
@@ -61,11 +63,11 @@ func _on_network_peer_connected(peer_id: int):
 	message_label.text = "Connected!"
 	SyncManager.add_peer(peer_id)
 
-	$ServerPlayer.set_network_master(1)
+	$BotPlayer.set_network_master(1)
 	if get_tree().is_network_server():
-		$ClientPlayer.set_network_master(peer_id)
+		$TopPlayer.set_network_master(peer_id)
 	else:
-		$ClientPlayer.set_network_master(get_tree().get_network_unique_id())
+		$TopPlayer.set_network_master(get_tree().get_network_unique_id())
 
 	if get_tree().is_network_server():
 		message_label.text = "Starting..."
@@ -139,9 +141,9 @@ func _on_OnlineButton_pressed() -> void:
 	SyncManager.reset_network_adaptor()
 
 func _on_LocalButton_pressed() -> void:
-	server_player.set_collision_mask_bit(1, false)
+	$BotPlayer.set_collision_mask_bit(1, false)
 	center_line.visible = false
-	$ClientPlayer.queue_free()
+	$TopPlayer.queue_free()
 	main_menu.visible = false
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()
