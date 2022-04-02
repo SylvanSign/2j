@@ -2,7 +2,6 @@ tool
 extends Piece
 
 onready var center := $Center
-onready var magnetic_field := $MagneticField
 
 const ACCELERATION := 65536 * 6
 var input_prefix   := "player1_"
@@ -13,9 +12,8 @@ func _ready() -> void:
 	bouncy         = false
 
 func sync_to_physics_engine() -> void:
-	center.sync_to_physics_engine()
-	magnetic_field.sync_to_physics_engine()
 	.sync_to_physics_engine()
+	center.sync_to_physics_engine()
 
 func _get_local_input() -> Dictionary:
 	var input_vector := Input.get_vector(input_prefix + "left", input_prefix + "right", input_prefix + "up", input_prefix + "down").normalized()
@@ -33,6 +31,3 @@ func _network_process(input: Dictionary) -> void:
 		velocity = velocity.normalized().mul(speed)
 
 	._network_process(input)
-
-	for body in magnetic_field.get_overlapping_bodies():
-		print(body.name, ' entered magnetic field')

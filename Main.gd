@@ -17,6 +17,10 @@ onready var center_line = $Arena/Center/CenterColor
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
 func _ready() -> void:
+	var players = [$ServerPlayer, $ClientPlayer]
+	$LeftBiscuit.players = players
+	$MidBiscuit.players = players
+	$RightBiscuit.players = players
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
 	get_tree().connect("network_peer_disconnected", self, "_on_network_peer_disconnected")
 	get_tree().connect("server_disconnected", self, "_on_server_disconnected")

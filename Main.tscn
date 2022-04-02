@@ -19,6 +19,7 @@ extents_y = 28835840
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
+logging_enabled = true
 
 [node name="Floor" parent="." instance=ExtResource( 6 )]
 
@@ -110,6 +111,16 @@ fixed_position_x = 22282240
 fixed_position_y = 57016320
 shape = SubResource( 1 )
 
+[node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
+position = Vector2( 340, 650 )
+fixed_position_x = 22282240
+fixed_position_y = 42598400
+
+[node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
+position = Vector2( 340, 230 )
+fixed_position_x = 22282240
+fixed_position_y = 15073280
+
 [node name="LeftBiscuit" parent="." instance=ExtResource( 5 )]
 position = Vector2( 170, 440 )
 fixed_position_x = 11141120
@@ -129,16 +140,6 @@ fixed_position_y = 28835840
 position = Vector2( 340, 550 )
 fixed_position_x = 22282240
 fixed_position_y = 36044800
-
-[node name="ServerPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 340, 650 )
-fixed_position_x = 22282240
-fixed_position_y = 42598400
-
-[node name="ClientPlayer" parent="." instance=ExtResource( 2 )]
-position = Vector2( 340, 230 )
-fixed_position_x = 22282240
-fixed_position_y = 15073280
 
 [node name="Menu" type="CanvasLayer" parent="."]
 

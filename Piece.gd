@@ -6,7 +6,7 @@ export(Color) var color: Color
 export(int)   var radius := 65536 * 1
 
 const NUM_SLIDES     := 4
-const EPSILON        := 65536 / 5 * 8
+const EPSILON        := 65536 / 2
 var   ZERO           := SGFixedVector2.new() # fixed analog to Vector2.ZERO
 var   speed          := 65536 * 24
 var   friction       := 65536 / 8
@@ -23,7 +23,7 @@ func hit_me(hit_velocity: SGFixedVector2) -> void:
 	if velocity.length() > speed:
 		velocity = velocity.normalized().mul(speed)
 
-func _network_process(input: Dictionary) -> void:
+func _network_process(_input: Dictionary) -> void:
 	var friction_vector: SGFixedVector2 = velocity.direction_to(ZERO).mul(friction)
 	velocity.iadd(friction_vector)
 	# stop if our velocity is small enough
