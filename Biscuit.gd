@@ -5,8 +5,8 @@ onready var field := $Field
 var players: Array
 
 const PLAYER_SIZE                 := 65536 * 20
-const MAGNETIC_FIELD_SIZE         := 65536 * 60
-const MAGNETIC_FIELD_ACCELERATION := 65536 * 2
+const MAGNETIC_FIELD_SIZE         := 65536 * 70
+const MAGNETIC_FIELD_ACCELERATION := 65536 * 8
 
 var attached_to := ''
 var offset := SGFixedVector2.new()

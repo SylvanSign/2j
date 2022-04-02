@@ -5,7 +5,7 @@
 [sub_resource type="SGCircleShape2D" id=1]
 
 [sub_resource type="SGCircleShape2D" id=2]
-radius = 3932160
+radius = 4587520
 
 [node name="Biscuit" type="SGKinematicBody2D" groups=["network_sync"]]
 collision_layer = 32

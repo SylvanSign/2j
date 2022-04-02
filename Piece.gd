@@ -6,7 +6,7 @@ export(Color) var color: Color
 export(int)   var radius := 65536 * 1
 
 const NUM_SLIDES     := 4
-const EPSILON        := 65536 / 2
+const EPSILON        := 65536 / 1
 var   ZERO           := SGFixedVector2.new() # fixed analog to Vector2.ZERO
 var   speed          := 65536 * 24
 var   friction       := 65536 / 8
