@@ -2,7 +2,6 @@ tool
 extends StoppablePiece
 class_name Player
 
-onready var center := $Center
 onready var magnet := $Magnet
 
 const ACCELERATION := 65536 * 6

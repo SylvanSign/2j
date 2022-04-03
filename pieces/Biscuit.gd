@@ -2,7 +2,6 @@ tool
 extends StoppablePiece
 
 onready var field := $Field
-onready var center := $Center
 var players: Array
 
 const MAGNETIC_FIELD_ACCELERATION := 65536 * 8

@@ -1,20 +1,20 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Goal.gd" type="Script" id=1]
-[ext_resource path="res://addons/godot-rollback-netcode/log_inspector/monogram_extended.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://addons/godot-rollback-netcode/NetworkTimer.gd" type="Script" id=3]
+[ext_resource path="res://addons/godot-rollback-netcode/log_inspector/monogram_extended.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://addons/godot-rollback-netcode/NetworkTimer.gd" type="Script" id=2]
+[ext_resource path="res://board/Goal.gd" type="Script" id=3]
 
 [sub_resource type="SGCircleShape2D" id=3]
 radius = 2294696
 
 [sub_resource type="DynamicFont" id=2]
 size = 128
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [node name="Goal" type="SGArea2D" groups=["network_sync"]]
 collision_layer = 0
-collision_mask = 1664
-script = ExtResource( 1 )
+collision_mask = 128
+script = ExtResource( 3 )
 
 [node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="."]
 shape = SubResource( 3 )
@@ -33,7 +33,7 @@ custom_fonts/font = SubResource( 2 )
 text = "0"
 
 [node name="NetworkTimer" type="Node" parent="."]
-script = ExtResource( 3 )
+script = ExtResource( 2 )
 one_shot = true
 wait_ticks = 60
 

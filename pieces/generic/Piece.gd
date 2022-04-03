@@ -18,6 +18,10 @@ var   velocity := SGFixedVector2.new()
 func _draw() -> void:
 	draw_circle(Vector2.ZERO, SGFixed.to_float(radius), color)
 
+func _process(delta: float) -> void:
+	if Engine.editor_hint:
+		update()
+
 func hit_me(hit_velocity: SGFixedVector2) -> void:
 	velocity.iadd(hit_velocity.mul(hit_multiplier))
 	if velocity.length() > speed:

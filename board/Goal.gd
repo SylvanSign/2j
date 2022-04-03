@@ -41,5 +41,4 @@ func _load_state(state: Dictionary) -> void:
 
 
 func _on_NetworkTimer_timeout() -> void:
-	just_scored = false
 	emit_signal('goal')

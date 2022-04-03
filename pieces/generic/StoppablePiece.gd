@@ -8,8 +8,8 @@ var stopped := false
 func stop() -> void:
 	stopped = true
 	collision_layer = 0
-	center.collision_layer = 0
 	collision_mask = 0
+	center.collision_layer = 0
 	center.collision_mask = 0
 	velocity.clear()
 
@@ -22,12 +22,14 @@ func _save_state() -> Dictionary:
 	state['stopped'] = stopped
 	state['collision_layer'] = collision_layer
 	state['collision_mask'] = collision_mask
+	state['center_collision_layer'] = center.collision_layer
+	state['center_collision_mask'] = center.collision_mask
 	return state
 
 func _load_state(state: Dictionary) -> void:
 	stopped = state['stopped']
 	collision_layer = state['collision_layer']
-	center.collision_layer = collision_layer
 	collision_mask = state['collision_mask']
-	center.collision_mask = collision_mask
+	center.collision_layer = state['center_collision_layer']
+	center.collision_mask = state['center_collision_mask']
 	._load_state(state)

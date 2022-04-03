@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "StoppablePiece",
 "class": "Ball",
 "language": "GDScript",
-"path": "res://Ball.gd"
+"path": "res://pieces/Ball.gd"
 }, {
 "base": "AnimationPlayer",
 "class": "NetworkAnimationPlayer",
@@ -32,17 +32,17 @@ _global_script_classes=[ {
 "base": "SGKinematicBody2D",
 "class": "Piece",
 "language": "GDScript",
-"path": "res://Piece.gd"
+"path": "res://pieces/generic/Piece.gd"
 }, {
 "base": "StoppablePiece",
 "class": "Player",
 "language": "GDScript",
-"path": "res://Player.gd"
+"path": "res://pieces/Player.gd"
 }, {
 "base": "Piece",
 "class": "StoppablePiece",
 "language": "GDScript",
-"path": "res://StoppablePiece.gd"
+"path": "res://pieces/generic/StoppablePiece.gd"
 } ]
 _global_script_class_icons={
 "Ball": "",
@@ -57,7 +57,7 @@ _global_script_class_icons={
 [application]
 
 config/name="2J"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://board/Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -131,7 +131,7 @@ player1_right={
 2d_physics/layer_5="goal"
 2d_physics/layer_6="biscuit"
 2d_physics/layer_7="magnetic field"
-2d_physics/layer_8="player center"
+2d_physics/layer_8="piece center"
 2d_physics/layer_9="biscuit magnet"
 2d_physics/layer_10="ball center"
 2d_physics/layer_11="biscuit center"
@@ -139,11 +139,11 @@ player1_right={
 [network]
 
 rollback/limits/max_ticks_to_regain_sync=600
-rollback/classes/message_serializer="res://CustomMessageSerializer.gd"
-rollback/classes/hash_serializer="res://CustomHashSerializer.gd"
+rollback/classes/message_serializer="res://custom_netcode_scripts/CustomMessageSerializer.gd"
+rollback/classes/hash_serializer="res://custom_netcode_scripts/CustomHashSerializer.gd"
 rollback/debug/rollback_ticks=4
 rollback/debug/random_rollback_ticks=10
-rollback/log_inspector/replay_match_scene_path="res://Main.tscn"
+rollback/log_inspector/replay_match_scene_path="res://board/Main.tscn"
 
 [physics]
 
