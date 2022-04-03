@@ -1,12 +1,16 @@
 extends Piece
 class_name StoppablePiece
 
+onready var center := $Center
+
 var stopped := false
 
 func stop() -> void:
 	stopped = true
 	collision_layer = 0
+	center.collision_layer = 0
 	collision_mask = 0
+	center.collision_mask = 0
 	velocity.clear()
 
 func _network_process(input: Dictionary) -> void:
@@ -23,5 +27,7 @@ func _save_state() -> Dictionary:
 func _load_state(state: Dictionary) -> void:
 	stopped = state['stopped']
 	collision_layer = state['collision_layer']
+	center.collision_layer = collision_layer
 	collision_mask = state['collision_mask']
+	center.collision_mask = collision_mask
 	._load_state(state)
