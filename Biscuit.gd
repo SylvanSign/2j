@@ -34,26 +34,20 @@ func _network_postprocess(input: Dictionary) -> void:
 		# no need to sync to physics engine here, as the biscuit is only visual at this point
 
 func attach(body: Piece) -> void:
-	print('attached')
 	attached_to = body.get_path()
 	offset = body.fixed_position.sub(fixed_position)
-	collision_layer = 0
-	collision_mask = 0
+	stop()
+	stopped = false # to allow following player piece
 
 func _save_state() -> Dictionary:
 	var state := ._save_state()
 	state['offset_x'] = offset.x
 	state['offset_y'] = offset.y
 	state['attached_to'] = attached_to
-	state['collision_layer'] = collision_layer
-	state['collision_mask'] = collision_mask
-
 	return state
 
 func _load_state(state: Dictionary) -> void:
 	offset.x = state['offset_x']
 	offset.y = state['offset_y']
 	attached_to = state['attached_to']
-	collision_layer = state['collision_layer']
-	collision_mask = state['collision_mask']
 	._load_state(state)

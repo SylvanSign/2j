@@ -71,3 +71,4 @@ func _load_state(state: Dictionary) -> void:
 	velocity.x = state['vel_x']
 	velocity.y = state['vel_y']
 	sync_to_physics_engine()
+	_sync_children()
