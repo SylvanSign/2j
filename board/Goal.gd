@@ -5,7 +5,7 @@ signal goal # TODO use this somehow?
 
 var players: Array
 
-onready var label := $Score
+onready var label := $RenderLayer/Score
 onready var timer := $NetworkTimer
 var score := 0
 var goal_radius := 65536 * 35

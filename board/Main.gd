@@ -11,7 +11,7 @@ onready var port_field = $Menu/ConnectionPanel/GridContainer/PortField
 onready var message_label = $Menu/CenterContainer/MessageLabel
 onready var sync_lost_label = $Menu/SyncLostLabel
 onready var reset_button = $Menu/ResetButton
-onready var center_line = $Arena/Center/CenterColor
+onready var center_line = $Board/Center/CenterColor
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
@@ -38,19 +38,19 @@ func _ready() -> void:
 					_on_ServerButton_pressed()
 				'join':
 					_on_ClientButton_pressed()
-			init_pieces([$BotPlayer, $TopPlayer])
+			init_pieces([$Pieces/BotPlayer, $Pieces/TopPlayer])
 		else:
-			init_pieces([$BotPlayer])
+			init_pieces([$Pieces/BotPlayer])
 			_on_LocalButton_pressed()
 
 func init_pieces(players: Array) -> void:
-	$LeftBiscuit.players = players
-	$MidBiscuit.players = players
-	$RightBiscuit.players = players
-	$BotGoal.players = players
+	$Pieces/LeftBiscuit.players = players
+	$Pieces/MidBiscuit.players = players
+	$Pieces/RightBiscuit.players = players
+	$Board/BotGoal.players = players
 	var top_goal_players := players.duplicate()
 	top_goal_players.invert()
-	$TopGoal.players = top_goal_players
+	$Board/TopGoal.players = top_goal_players
 
 func _on_ServerButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
@@ -151,9 +151,9 @@ func _on_OnlineButton_pressed() -> void:
 	SyncManager.reset_network_adaptor()
 
 func _on_LocalButton_pressed() -> void:
-	$BotPlayer.set_collision_mask_bit(1, false)
+	$Pieces/BotPlayer.set_collision_mask_bit(1, false)
 	center_line.visible = false
-	$TopPlayer.queue_free()
+	$Pieces/TopPlayer.queue_free()
 	main_menu.visible = false
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()

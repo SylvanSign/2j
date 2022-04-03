@@ -1,8 +1,8 @@
 extends "res://addons/godot-rollback-netcode/MessageSerializer.gd"
 
 const input_path_mapping := {
-	'/root/Main/BotPlayer': 1,
-	'/root/Main/TopPlayer': 2,
+	'/root/Main/Pieces/BotPlayer': 1,
+	'/root/Main/Pieces/TopPlayer': 2,
 }
 
 enum HeaderFlags {
