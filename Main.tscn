@@ -276,6 +276,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="goal" from="Board/TopGoal" to="." method="_on_TopGoal_goal"]
+[connection signal="goal" from="Board/BotGoal" to="." method="_on_BotGoal_goal"]
 [connection signal="double_biscuit" from="Pieces/BotPlayer" to="." method="_on_BotPlayer_double_biscuit"]
 [connection signal="double_biscuit" from="Pieces/TopPlayer" to="." method="_on_TopPlayer_double_biscuit"]
 [connection signal="pressed" from="Menu/MainMenu/LocalButton" to="." method="_on_LocalButton_pressed"]

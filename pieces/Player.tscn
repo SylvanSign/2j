@@ -30,6 +30,6 @@ shape = SubResource( 2 )
 [node name="NetworkTimer" type="Node" parent="." index="3"]
 script = ExtResource( 3 )
 one_shot = true
-wait_ticks = 60
+wait_ticks = 20
 
 [connection signal="timeout" from="NetworkTimer" to="." method="_on_NetworkTimer_timeout"]

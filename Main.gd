@@ -15,11 +15,6 @@ onready var center_line = $Board/Center/CenterColor
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
-const score = {
-	'top': 0,
-	'bot': 0,
-}
-
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
 	get_tree().connect("network_peer_disconnected", self, "_on_network_peer_disconnected")
