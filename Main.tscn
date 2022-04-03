@@ -260,8 +260,17 @@ __meta__ = {
 }
 
 [node name="SpawnTopPlayerMid" type="SGFixedNode2D" parent="."]
+position = Vector2( 340, 230 )
+fixed_position_x = 22282240
+fixed_position_y = 15073280
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="SpawnTopPlayerLeft" type="SGFixedNode2D" parent="."]
+position = Vector2( 120, 120 )
+fixed_position_x = 7864320
+fixed_position_y = 7864320
 
 [node name="SpawnTopPlayerRight" type="SGFixedNode2D" parent="."]
 

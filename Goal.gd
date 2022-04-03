@@ -1,5 +1,5 @@
 tool
-extends SGFixedNode2D
+extends SGArea2D
 
 signal goal # TODO use this somehow?
 
@@ -17,16 +17,16 @@ func _draw() -> void:
 	draw_circle(Vector2.ZERO, 35, color)
 
 func _network_process(_input: Dictionary) -> void:
-	if fixed_position.distance_to(players[0].fixed_position) <= goal_radius:
-		goal()
+	var areas := get_overlapping_areas(false)
+	if areas.size() > 0:
+		goal(areas[0].get_parent() as StoppablePiece)
 
-func goal() -> void:
-	if not just_scored:
+func goal(piece: StoppablePiece) -> void:
+	piece.stop()
+	if not just_scored and (piece is Player or piece is Ball):
 		just_scored = true
 		score += 1
 		label.text = str(score)
-		for player in players:
-			player.stopped = true
 		timer.start()
 
 func _save_state() -> Dictionary:

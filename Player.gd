@@ -1,20 +1,22 @@
 tool
-extends Piece
+extends StoppablePiece
+class_name Player
 
 onready var center := $Center
+onready var magnet := $Magnet
 
 const ACCELERATION := 65536 * 6
 var input_prefix   := "player1_"
-var stopped        := false
 
 func _ready() -> void:
 	speed    = 65536 * 16
 	friction = 65536 * 2
 	bouncy   = false
 
-func sync_to_physics_engine() -> void:
-	.sync_to_physics_engine()
+func _sync_children() -> void:
 	center.sync_to_physics_engine()
+	magnet.sync_to_physics_engine()
+
 
 func _get_local_input() -> Dictionary:
 	if stopped:
@@ -34,13 +36,8 @@ func _network_process(input: Dictionary) -> void:
 	if velocity.length() > speed:
 		velocity = velocity.normalized().mul(speed)
 
+	for biscuit in magnet.get_overlapping_bodies():
+		biscuit.attach(self)
+
 	._network_process(input)
 
-func _save_state() -> Dictionary:
-	var state := ._save_state()
-	state['stopped'] = stopped
-	return state
-
-func _load_state(state: Dictionary) -> void:
-	stopped = state['stopped']
-	._load_state(state)

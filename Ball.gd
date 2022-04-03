@@ -1,8 +1,8 @@
 tool
-extends Piece
+extends StoppablePiece
+class_name Ball
 
-#func _ready() -> void:
-#	speed          = 65536 * 24
-#	friction       = 65536 / 8
-#	bounce_loss    = 65536 * 1
-#	hit_multiplier = 65536 * 2
+onready var center := $Center
+
+func _sync_children() -> void:
+	center.sync_to_physics_engine()

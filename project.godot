@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "StoppablePiece",
+"class": "Ball",
+"language": "GDScript",
+"path": "res://Ball.gd"
+}, {
 "base": "AnimationPlayer",
 "class": "NetworkAnimationPlayer",
 "language": "GDScript",
@@ -28,12 +33,25 @@ _global_script_classes=[ {
 "class": "Piece",
 "language": "GDScript",
 "path": "res://Piece.gd"
+}, {
+"base": "StoppablePiece",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Player.gd"
+}, {
+"base": "Piece",
+"class": "StoppablePiece",
+"language": "GDScript",
+"path": "res://StoppablePiece.gd"
 } ]
 _global_script_class_icons={
+"Ball": "",
 "NetworkAnimationPlayer": "",
 "NetworkRandomNumberGenerator": "",
 "NetworkTimer": "",
-"Piece": ""
+"Piece": "",
+"Player": "",
+"StoppablePiece": ""
 }
 
 [application]
@@ -114,15 +132,15 @@ player1_right={
 2d_physics/layer_6="biscuit"
 2d_physics/layer_7="magnetic field"
 2d_physics/layer_8="player center"
-2d_physics/layer_9="magnetic base"
+2d_physics/layer_9="biscuit magnet"
+2d_physics/layer_10="ball center"
+2d_physics/layer_11="biscuit center"
 
 [network]
 
 rollback/limits/max_ticks_to_regain_sync=600
 rollback/classes/message_serializer="res://CustomMessageSerializer.gd"
 rollback/classes/hash_serializer="res://CustomHashSerializer.gd"
-rollback/debug/rollback_ticks=4
-rollback/debug/random_rollback_ticks=10
 rollback/log_inspector/replay_match_scene_path="res://Main.tscn"
 
 [physics]

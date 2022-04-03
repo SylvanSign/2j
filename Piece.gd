@@ -51,6 +51,12 @@ func _network_process(_input: Dictionary) -> void:
 		else:
 			velocity = collision.remainder.slide(collision.normal.normalized())
 
+	_sync_children()
+
+# child classes should override this if needed
+func _sync_children() -> void:
+	pass
+
 func _save_state() -> Dictionary:
 	return {
 		pos_x = fixed_position.x,
