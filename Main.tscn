@@ -276,6 +276,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[connection signal="double_biscuit" from="Pieces/BotPlayer" to="." method="_on_BotPlayer_double_biscuit"]
+[connection signal="double_biscuit" from="Pieces/TopPlayer" to="." method="_on_TopPlayer_double_biscuit"]
 [connection signal="pressed" from="Menu/MainMenu/LocalButton" to="." method="_on_LocalButton_pressed"]
 [connection signal="pressed" from="Menu/MainMenu/OnlineButton" to="." method="_on_OnlineButton_pressed"]
 [connection signal="pressed" from="Menu/ConnectionPanel/GridContainer/ServerButton" to="." method="_on_ServerButton_pressed"]

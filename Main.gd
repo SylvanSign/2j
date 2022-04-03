@@ -158,10 +158,14 @@ func _on_LocalButton_pressed() -> void:
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()
 
-
 func _on_TopGoal_goal() -> void:
 	print('top goal!')
 
-
 func _on_BotGoal_goal() -> void:
 	print('bot goal!')
+
+func _on_TopPlayer_double_biscuit(player) -> void:
+	print('top double biscuit!')
+
+func _on_BotPlayer_double_biscuit(player) -> void:
+	print('bot double biscuit!')

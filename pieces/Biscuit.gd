@@ -33,7 +33,6 @@ func _network_postprocess(input: Dictionary) -> void:
 		# no need to sync to physics engine here, as the biscuit is only visual at this point
 
 func attach(body: Piece) -> void:
-	print('attach')
 	attached_to = body.get_path()
 	offset = body.fixed_position.sub(fixed_position)
 	stop()
