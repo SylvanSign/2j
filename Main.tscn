@@ -17,22 +17,28 @@ extents_x = 22282240
 [sub_resource type="SGRectangleShape2D" id=6]
 extents_y = 28835840
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node"]
 script = ExtResource( 3 )
 
-[node name="Board" type="Node2D" parent="."]
+[node name="Board" type="Node" parent="."]
 
 [node name="Floor" parent="Board" instance=ExtResource( 4 )]
 
 [node name="Center" type="SGStaticBody2D" parent="Board"]
 collision_layer = 2
 collision_mask = 0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CenterColor" type="ColorRect" parent="Board/Center"]
 margin_top = 439.0
 margin_right = 680.0
 margin_bottom = 441.0
 color = Color( 1, 1, 1, 0.392157 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CenterCollisionShape" type="SGCollisionShape2D" parent="Board/Center"]
 position = Vector2( 340, 440 )
@@ -42,20 +48,32 @@ fixed_position_y = 28835840
 fixed_scale_x = 65535
 fixed_scale_y = 65535
 shape = SubResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Walls" type="SGStaticBody2D" parent="Board"]
 collision_mask = 0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TopColor" type="ColorRect" parent="Board/Walls"]
 margin_right = 680.0
 margin_bottom = 20.0
 color = Color( 0.988235, 0.74902, 0.286275, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="LeftColor" type="ColorRect" parent="Board/Walls"]
 margin_right = 20.0
 margin_bottom = 880.0
 rect_pivot_offset = Vector2( 0, 300 )
 color = Color( 0.988235, 0.74902, 0.286275, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Rightcolor" type="ColorRect" parent="Board/Walls"]
 margin_left = 660.0
@@ -63,18 +81,27 @@ margin_right = 680.0
 margin_bottom = 880.0
 rect_pivot_offset = Vector2( 0, 300 )
 color = Color( 0.988235, 0.74902, 0.286275, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="BotColor" type="ColorRect" parent="Board/Walls"]
 margin_top = 860.0
 margin_right = 680.0
 margin_bottom = 880.0
 color = Color( 0.988235, 0.74902, 0.286275, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TopCollisionShape" type="SGCollisionShape2D" parent="Board/Walls"]
 position = Vector2( 340, 10 )
 fixed_position_x = 22282240
 fixed_position_y = 655360
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="LeftCollisionShape" type="SGCollisionShape2D" parent="Board/Walls"]
 position = Vector2( 10, 440 )
@@ -84,6 +111,9 @@ fixed_position_y = 28835840
 fixed_scale_x = 65535
 fixed_scale_y = 65535
 shape = SubResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="RightCollisionShape" type="SGCollisionShape2D" parent="Board/Walls"]
 position = Vector2( 670, 440 )
@@ -93,12 +123,18 @@ fixed_position_y = 28835840
 fixed_scale_x = 65535
 fixed_scale_y = 65535
 shape = SubResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="BotCollisionShape" type="SGCollisionShape2D" parent="Board/Walls"]
 position = Vector2( 340, 870 )
 fixed_position_x = 22282240
 fixed_position_y = 57016320
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="TopGoal" parent="Board" instance=ExtResource( 6 )]
 position = Vector2( 340, 95 )
@@ -110,37 +146,119 @@ position = Vector2( 340, 785 )
 fixed_position_x = 22282240
 fixed_position_y = 51445760
 
-[node name="SpawnTopPlayerMid" type="SGFixedNode2D" parent="Board"]
-position = Vector2( 340, 230 )
+[node name="Spawns" type="Node" parent="Board"]
+
+[node name="Players" type="Node" parent="Board/Spawns"]
+
+[node name="TopPlayerMid" type="SGFixedNode2D" parent="Board/Spawns/Players"]
+position = Vector2( 340, 200 )
 fixed_position_x = 22282240
-fixed_position_y = 15073280
+fixed_position_y = 13107200
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="SpawnTopPlayerLeft" type="SGFixedNode2D" parent="Board"]
-position = Vector2( 120, 120 )
-fixed_position_x = 7864320
-fixed_position_y = 7864320
+[node name="TopPlayerLeft" type="SGFixedNode2D" parent="Board/Spawns/Players"]
+position = Vector2( 45, 45 )
+fixed_position_x = 2949120
+fixed_position_y = 2949120
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="SpawnTopPlayerRight" type="SGFixedNode2D" parent="Board"]
+[node name="TopPlayerRight" type="SGFixedNode2D" parent="Board/Spawns/Players"]
+position = Vector2( 595, 85 )
+fixed_position_x = 38993920
+fixed_position_y = 5570560
+__meta__ = {
+"_edit_lock_": true
+}
 
-[node name="Pieces" type="Node2D" parent="."]
+[node name="BotPlayerMid" type="SGFixedNode2D" parent="Board/Spawns/Players"]
+position = Vector2( 340, 680 )
+fixed_position_x = 22282240
+fixed_position_y = 44564480
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BotPlayerLeft" type="SGFixedNode2D" parent="Board/Spawns/Players"]
+position = Vector2( 85, 795 )
+fixed_position_x = 5570560
+fixed_position_y = 52101120
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BotPlayerRight" type="SGFixedNode2D" parent="Board/Spawns/Players"]
+position = Vector2( 635, 835 )
+fixed_position_x = 41615360
+fixed_position_y = 54722560
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Ball" type="Node" parent="Board/Spawns"]
+
+[node name="BallTopLeft" type="SGFixedNode2D" parent="Board/Spawns/Ball"]
+position = Vector2( 85, 85 )
+fixed_position_x = 5570560
+fixed_position_y = 5570560
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BallTopRight" type="SGFixedNode2D" parent="Board/Spawns/Ball"]
+position = Vector2( 595, 85 )
+fixed_position_x = 38993920
+fixed_position_y = 5570560
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BallBotLeft" type="SGFixedNode2D" parent="Board/Spawns/Ball"]
+position = Vector2( 85, 795 )
+fixed_position_x = 5570560
+fixed_position_y = 52101120
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BallBotRight" type="SGFixedNode2D" parent="Board/Spawns/Ball"]
+position = Vector2( 595, 795 )
+fixed_position_x = 38993920
+fixed_position_y = 52101120
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Biscuits" type="Node" parent="Board/Spawns"]
+
+[node name="LeftBiscuit" type="SGFixedNode2D" parent="Board/Spawns/Biscuits"]
+position = Vector2( 169, 440 )
+
+[node name="MidBiscuit" type="SGFixedNode2D" parent="Board/Spawns/Biscuits"]
+position = Vector2( 340, 440 )
+
+[node name="RightBiscuit" type="SGFixedNode2D" parent="Board/Spawns/Biscuits"]
+position = Vector2( 510, 440 )
+
+[node name="Pieces" type="Node" parent="."]
 
 [node name="BotPlayer" parent="Pieces" instance=ExtResource( 5 )]
-position = Vector2( 340, 650 )
-fixed_position_x = 22282240
-fixed_position_y = 42598400
+position = Vector2( 635, 835 )
+fixed_position_x = 41615360
+fixed_position_y = 54722560
 
 [node name="TopPlayer" parent="Pieces" instance=ExtResource( 5 )]
-position = Vector2( 340, 230 )
+position = Vector2( 340, 200 )
 fixed_position_x = 22282240
-fixed_position_y = 15073280
+fixed_position_y = 13107200
 
 [node name="Ball" parent="Pieces" instance=ExtResource( 1 )]
-position = Vector2( 340, 575 )
-fixed_position_x = 22282240
-fixed_position_y = 37683200
+position = Vector2( 595, 795 )
+fixed_position_x = 38993920
+fixed_position_y = 52101120
 
 [node name="LeftBiscuit" parent="Pieces" instance=ExtResource( 2 )]
 position = Vector2( 169, 440 )
@@ -169,6 +287,9 @@ margin_left = -87.5
 margin_top = -20.0
 margin_right = 87.5
 margin_bottom = 20.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="LocalButton" type="Button" parent="Menu/MainMenu"]
 margin_right = 86.0
@@ -190,6 +311,9 @@ margin_left = -150.0
 margin_top = -45.0
 margin_right = 150.0
 margin_bottom = 45.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="GridContainer" type="GridContainer" parent="Menu/ConnectionPanel"]
 margin_left = 7.0
@@ -197,6 +321,9 @@ margin_top = 7.0
 margin_right = 293.0
 margin_bottom = 83.0
 columns = 2
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="HostLabel" type="Label" parent="Menu/ConnectionPanel/GridContainer"]
 margin_top = 5.0
@@ -204,6 +331,9 @@ margin_right = 141.0
 margin_bottom = 19.0
 size_flags_horizontal = 3
 text = "Host:"
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="HostField" type="LineEdit" parent="Menu/ConnectionPanel/GridContainer"]
 margin_left = 145.0
@@ -212,6 +342,10 @@ margin_bottom = 24.0
 size_flags_horizontal = 3
 text = "127.0.0.1"
 align = 2
+caret_blink_speed = 0.5
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="PortLabel" type="Label" parent="Menu/ConnectionPanel/GridContainer"]
 margin_top = 33.0
@@ -219,6 +353,9 @@ margin_right = 141.0
 margin_bottom = 47.0
 size_flags_horizontal = 3
 text = "Port:"
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="PortField" type="LineEdit" parent="Menu/ConnectionPanel/GridContainer"]
 margin_left = 145.0
@@ -228,6 +365,10 @@ margin_bottom = 52.0
 size_flags_horizontal = 3
 text = "9999"
 align = 2
+caret_blink_speed = 0.5
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="ServerButton" type="Button" parent="Menu/ConnectionPanel/GridContainer"]
 margin_top = 56.0
@@ -235,6 +376,9 @@ margin_right = 141.0
 margin_bottom = 76.0
 size_flags_horizontal = 3
 text = "Server"
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="ClientButton" type="Button" parent="Menu/ConnectionPanel/GridContainer"]
 margin_left = 145.0
@@ -243,11 +387,17 @@ margin_right = 286.0
 margin_bottom = 76.0
 size_flags_horizontal = 3
 text = "Client"
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CenterContainer" type="CenterContainer" parent="Menu"]
 anchor_right = 1.0
 margin_top = 860.0
 margin_bottom = 880.0
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="MessageLabel" type="Label" parent="Menu/CenterContainer"]
 margin_left = 340.0
@@ -255,6 +405,9 @@ margin_top = 3.0
 margin_right = 340.0
 margin_bottom = 17.0
 align = 1
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="ResetButton" type="Button" parent="Menu"]
 anchor_left = 1.0
@@ -264,6 +417,9 @@ anchor_bottom = 1.0
 margin_left = -48.0
 margin_top = -20.0
 text = "RESET"
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="SyncLostLabel" type="Label" parent="Menu"]
 visible = false
@@ -273,6 +429,7 @@ margin_top = -14.0
 margin_right = 106.0
 text = "Regaining sync..."
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
