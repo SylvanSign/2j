@@ -15,6 +15,11 @@ onready var center_line = $Arena/Center/CenterColor
 
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
+const score = {
+	'top': 0,
+	'bot': 0,
+}
+
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
 	get_tree().connect("network_peer_disconnected", self, "_on_network_peer_disconnected")
@@ -33,15 +38,19 @@ func _ready() -> void:
 					_on_ServerButton_pressed()
 				'join':
 					_on_ClientButton_pressed()
-			init_biscuits([$BotPlayer, $TopPlayer])
+			init_pieces([$BotPlayer, $TopPlayer])
 		else:
-			init_biscuits([$BotPlayer])
+			init_pieces([$BotPlayer])
 			_on_LocalButton_pressed()
 
-func init_biscuits(players: Array) -> void:
+func init_pieces(players: Array) -> void:
 	$LeftBiscuit.players = players
 	$MidBiscuit.players = players
 	$RightBiscuit.players = players
+	$BotGoal.players = players
+	var top_goal_players := players.duplicate()
+	top_goal_players.invert()
+	$TopGoal.players = top_goal_players
 
 func _on_ServerButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
@@ -95,6 +104,7 @@ func _on_SyncManager_sync_started() -> void:
 	message_label.text = "Started!"
 
 	if logging_enabled and not SyncReplay.active:
+		print(logging_enabled)
 		var dir = Directory.new()
 		if not dir.dir_exists(LOG_FILE_DIRECTORY):
 			dir.make_dir(LOG_FILE_DIRECTORY)
@@ -147,3 +157,11 @@ func _on_LocalButton_pressed() -> void:
 	main_menu.visible = false
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()
+
+
+func _on_TopGoal_goal() -> void:
+	print('top goal!')
+
+
+func _on_BotGoal_goal() -> void:
+	print('bot goal!')

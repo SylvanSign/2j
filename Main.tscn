@@ -19,7 +19,6 @@ extents_y = 28835840
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
-logging_enabled = true
 
 [node name="Floor" parent="." instance=ExtResource( 6 )]
 
@@ -260,6 +259,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="SpawnTopPlayerMid" type="SGFixedNode2D" parent="."]
+
+[node name="SpawnTopPlayerLeft" type="SGFixedNode2D" parent="."]
+
+[node name="SpawnTopPlayerRight" type="SGFixedNode2D" parent="."]
+
+[connection signal="goal" from="TopGoal" to="." method="_on_TopGoal_goal"]
+[connection signal="goal" from="BotGoal" to="." method="_on_BotGoal_goal"]
 [connection signal="pressed" from="Menu/MainMenu/LocalButton" to="." method="_on_LocalButton_pressed"]
 [connection signal="pressed" from="Menu/MainMenu/OnlineButton" to="." method="_on_OnlineButton_pressed"]
 [connection signal="pressed" from="Menu/ConnectionPanel/GridContainer/ServerButton" to="." method="_on_ServerButton_pressed"]
