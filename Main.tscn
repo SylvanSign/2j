@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://pieces/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://board/Main.gd" type="Script" id=2]
-[ext_resource path="res://board/Floor.tscn" type="PackedScene" id=3]
-[ext_resource path="res://board/Goal.tscn" type="PackedScene" id=4]
-[ext_resource path="res://pieces/Ball.tscn" type="PackedScene" id=5]
-[ext_resource path="res://pieces/Biscuit.tscn" type="PackedScene" id=6]
+[ext_resource path="res://pieces/Ball.tscn" type="PackedScene" id=1]
+[ext_resource path="res://pieces/Biscuit.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Main.gd" type="Script" id=3]
+[ext_resource path="res://board/Floor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://pieces/Player.tscn" type="PackedScene" id=5]
+[ext_resource path="res://board/Goal.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SGRectangleShape2D" id=5]
 extents_x = 22282240
@@ -18,11 +18,11 @@ extents_x = 22282240
 extents_y = 28835840
 
 [node name="Main" type="Node2D"]
-script = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="Board" type="Node2D" parent="."]
 
-[node name="Floor" parent="Board" instance=ExtResource( 3 )]
+[node name="Floor" parent="Board" instance=ExtResource( 4 )]
 
 [node name="Center" type="SGStaticBody2D" parent="Board"]
 collision_layer = 2
@@ -100,12 +100,12 @@ fixed_position_x = 22282240
 fixed_position_y = 57016320
 shape = SubResource( 1 )
 
-[node name="TopGoal" parent="Board" instance=ExtResource( 4 )]
+[node name="TopGoal" parent="Board" instance=ExtResource( 6 )]
 position = Vector2( 340, 95 )
 fixed_position_x = 22282240
 fixed_position_y = 6225920
 
-[node name="BotGoal" parent="Board" instance=ExtResource( 4 )]
+[node name="BotGoal" parent="Board" instance=ExtResource( 6 )]
 position = Vector2( 340, 785 )
 fixed_position_x = 22282240
 fixed_position_y = 51445760
@@ -127,32 +127,32 @@ fixed_position_y = 7864320
 
 [node name="Pieces" type="Node2D" parent="."]
 
-[node name="BotPlayer" parent="Pieces" instance=ExtResource( 1 )]
+[node name="BotPlayer" parent="Pieces" instance=ExtResource( 5 )]
 position = Vector2( 340, 650 )
 fixed_position_x = 22282240
 fixed_position_y = 42598400
 
-[node name="TopPlayer" parent="Pieces" instance=ExtResource( 1 )]
+[node name="TopPlayer" parent="Pieces" instance=ExtResource( 5 )]
 position = Vector2( 340, 230 )
 fixed_position_x = 22282240
 fixed_position_y = 15073280
 
-[node name="Ball" parent="Pieces" instance=ExtResource( 5 )]
+[node name="Ball" parent="Pieces" instance=ExtResource( 1 )]
 position = Vector2( 340, 575 )
 fixed_position_x = 22282240
 fixed_position_y = 37683200
 
-[node name="LeftBiscuit" parent="Pieces" instance=ExtResource( 6 )]
+[node name="LeftBiscuit" parent="Pieces" instance=ExtResource( 2 )]
 position = Vector2( 169, 440 )
 fixed_position_x = 11075584
 fixed_position_y = 28835840
 
-[node name="MidBiscuit" parent="Pieces" instance=ExtResource( 6 )]
+[node name="MidBiscuit" parent="Pieces" instance=ExtResource( 2 )]
 position = Vector2( 340, 440 )
 fixed_position_x = 22282240
 fixed_position_y = 28835840
 
-[node name="RightBiscuit" parent="Pieces" instance=ExtResource( 6 )]
+[node name="RightBiscuit" parent="Pieces" instance=ExtResource( 2 )]
 position = Vector2( 510, 440 )
 fixed_position_x = 33423360
 fixed_position_y = 28835840

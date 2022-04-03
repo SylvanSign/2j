@@ -57,7 +57,7 @@ _global_script_class_icons={
 [application]
 
 config/name="2J"
-run/main_scene="res://board/Main.tscn"
+run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
@@ -143,7 +143,7 @@ rollback/classes/message_serializer="res://custom_netcode_scripts/CustomMessageS
 rollback/classes/hash_serializer="res://custom_netcode_scripts/CustomHashSerializer.gd"
 rollback/debug/rollback_ticks=4
 rollback/debug/random_rollback_ticks=10
-rollback/log_inspector/replay_match_scene_path="res://board/Main.tscn"
+rollback/log_inspector/replay_match_scene_path="res://Main.tscn"
 
 [physics]
 
