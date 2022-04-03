@@ -4,7 +4,7 @@ extends StoppablePiece
 onready var field := $Field
 var players: Array
 
-const MAGNETIC_FIELD_ACCELERATION := 65536 * 8
+const MAGNETIC_FIELD_ACCELERATION := 65536 * 4
 
 var attached_to := ''
 var offset := SGFixedVector2.new()

@@ -7,14 +7,18 @@ var players: Array
 
 onready var label := $RenderLayer/Score
 onready var timer := $NetworkTimer
+const radius := 65536 * 35
 var score := 0
-var goal_radius := 65536 * 35
 var just_scored := false
 
 export(Color) var color := Color('00507a')
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, 35, color)
+	draw_circle(Vector2.ZERO, SGFixed.to_float(radius), color)
+
+func _process(delta: float) -> void:
+	if Engine.editor_hint:
+		update()
 
 func _network_process(_input: Dictionary) -> void:
 	var areas := get_overlapping_areas(false)
@@ -22,6 +26,7 @@ func _network_process(_input: Dictionary) -> void:
 		goal(areas[0].get_parent() as StoppablePiece)
 
 func goal(piece: StoppablePiece) -> void:
+	piece.yank_inside(fixed_position)
 	piece.stop()
 	if not just_scored and (piece is Player or piece is Ball):
 		just_scored = true

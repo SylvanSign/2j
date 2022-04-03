@@ -13,6 +13,10 @@ func stop() -> void:
 	center.collision_mask = 0
 	velocity.clear()
 
+func yank_inside(fp: SGFixedVector2) -> void:
+	var direction := fixed_position.direction_to(fp)
+	fixed_position.iadd(direction.mul(radius))
+
 func _network_process(input: Dictionary) -> void:
 	if not stopped:
 		._network_process(input)
