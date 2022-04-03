@@ -11,6 +11,10 @@ const ACCELERATION := 65536 * 6
 var input_prefix   := "player1_"
 var biscuits_attached := 0
 
+func reset(fp: SGFixedVector2) -> void:
+	biscuits_attached = 0
+	.reset(fp)
+
 func _ready() -> void:
 	speed    = 65536 * 16
 	friction = 65536 * 2

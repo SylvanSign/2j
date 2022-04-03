@@ -9,6 +9,11 @@ const MAGNETIC_FIELD_ACCELERATION := 65536 * 4
 var attached_to := ''
 var offset := SGFixedVector2.new()
 
+func reset(fp: SGFixedVector2) -> void:
+	attached_to = ''
+	offset.clear()
+	.reset(fp)
+
 func _ready() -> void:
 	speed          = 65536 * 16
 	friction       = 65536 / 4

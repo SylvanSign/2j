@@ -1,6 +1,7 @@
 extends Node
 
 const DummyNetworkAdaptor = preload("res://addons/godot-rollback-netcode/DummyNetworkAdaptor.gd")
+const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
 export(bool) var logging_enabled: = false
 
@@ -13,7 +14,21 @@ onready var sync_lost_label = $Menu/SyncLostLabel
 onready var reset_button = $Menu/ResetButton
 onready var center_line = $Board/Center/CenterColor
 
-const LOG_FILE_DIRECTORY = 'user://detailed_logs'
+onready var top_player := $Pieces/TopPlayer
+onready var bot_player := $Pieces/BotPlayer
+onready var ball := $Pieces/Ball
+onready var left_biscuit := $Pieces/LeftBiscuit
+onready var mid_biscuit := $Pieces/MidBiscuit
+onready var right_biscuit := $Pieces/RightBiscuit
+
+func reset_pieces() -> void:
+	if is_instance_valid(top_player):
+		top_player.reset($Spawns/Players/TopPlayerMid.fixed_position)
+	bot_player.reset($Spawns/Players/BotPlayerMid.fixed_position)
+	ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
+	left_biscuit.reset($Spawns/Biscuits/LeftBiscuit.fixed_position)
+	mid_biscuit.reset($Spawns/Biscuits/MidBiscuit.fixed_position)
+	right_biscuit.reset($Spawns/Biscuits/RightBiscuit.fixed_position)
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
@@ -33,9 +48,9 @@ func _ready() -> void:
 					_on_ServerButton_pressed()
 				'join':
 					_on_ClientButton_pressed()
-			init_pieces([$Pieces/BotPlayer, $Pieces/TopPlayer])
+			init_pieces([bot_player, top_player])
 		else:
-			init_pieces([$Pieces/BotPlayer])
+			init_pieces([bot_player])
 			_on_LocalButton_pressed()
 
 func init_pieces(players: Array) -> void:
@@ -67,11 +82,11 @@ func _on_network_peer_connected(peer_id: int):
 	message_label.text = "Connected!"
 	SyncManager.add_peer(peer_id)
 
-	$Pieces/BotPlayer.set_network_master(1)
+	bot_player.set_network_master(1)
 	if get_tree().is_network_server():
-		$Pieces/TopPlayer.set_network_master(peer_id)
+		top_player.set_network_master(peer_id)
 	else:
-		$Pieces/TopPlayer.set_network_master(get_tree().get_network_unique_id())
+		top_player.set_network_master(get_tree().get_network_unique_id())
 
 	if get_tree().is_network_server():
 		message_label.text = "Starting..."
@@ -146,21 +161,25 @@ func _on_OnlineButton_pressed() -> void:
 	SyncManager.reset_network_adaptor()
 
 func _on_LocalButton_pressed() -> void:
-	$Pieces/BotPlayer.set_collision_mask_bit(1, false)
+	bot_player.set_collision_mask_bit(1, false)
 	center_line.visible = false
-	$Pieces/TopPlayer.queue_free()
+	top_player.queue_free()
 	main_menu.visible = false
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()
 
 func _on_TopGoal_goal() -> void:
 	print('top goal!')
+	reset_pieces()
 
 func _on_BotGoal_goal() -> void:
 	print('bot goal!')
+	reset_pieces()
 
 func _on_TopPlayer_double_biscuit(player) -> void:
 	print('top double biscuit!')
+	reset_pieces()
 
 func _on_BotPlayer_double_biscuit(player) -> void:
 	print('bot double biscuit!')
+	reset_pieces()

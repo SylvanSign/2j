@@ -4,6 +4,15 @@ class_name StoppablePiece
 onready var center := $Center
 
 var stopped := false
+var fresh_state := {}
+
+func _ready() -> void:
+	fresh_state = {
+		collision_layer = collision_layer,
+		collision_mask = collision_mask,
+		center_collision_layer = center.collision_layer,
+		center_collision_mask = center.collision_mask,
+	}
 
 func stop() -> void:
 	stopped = true
@@ -12,6 +21,18 @@ func stop() -> void:
 	center.collision_layer = 0
 	center.collision_mask = 0
 	velocity.clear()
+
+func reset(fp: SGFixedVector2) -> void:
+	velocity.clear()
+	fixed_position.x = fp.x
+	fixed_position.y = fp.y
+	stopped = false
+	collision_layer = fresh_state['collision_layer']
+	collision_mask = fresh_state['collision_mask']
+	center.collision_layer = fresh_state['center_collision_layer']
+	center.collision_mask = fresh_state['center_collision_mask']
+	sync_to_physics_engine()
+	_sync_children()
 
 func yank_inside(fp: SGFixedVector2) -> void:
 	var direction := fixed_position.direction_to(fp)
