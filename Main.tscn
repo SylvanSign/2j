@@ -163,34 +163,34 @@ text = "J"
 [node name="Pieces" type="Node" parent="."]
 
 [node name="BotPlayer" parent="Pieces" instance=ExtResource( 5 )]
-position = Vector2( 341, 610 )
-fixed_position_x = 22347776
-fixed_position_y = 39976960
+position = Vector2( 340, 650 )
+fixed_position_x = 22282240
+fixed_position_y = 42598400
 
 [node name="TopPlayer" parent="Pieces" instance=ExtResource( 5 )]
-position = Vector2( 341, 561 )
-fixed_position_x = 22347776
-fixed_position_y = 36765696
+position = Vector2( 340, 600 )
+fixed_position_x = 22282240
+fixed_position_y = 39321600
 
 [node name="Ball" parent="Pieces" instance=ExtResource( 1 )]
-position = Vector2( 302, 636 )
-fixed_position_x = 19791872
-fixed_position_y = 41680896
+position = Vector2( 290, 675 )
+fixed_position_x = 19005440
+fixed_position_y = 44236800
 
 [node name="LeftBiscuit" parent="Pieces" instance=ExtResource( 2 )]
-position = Vector2( 288, 512 )
-fixed_position_x = 18874368
-fixed_position_y = 33554432
+position = Vector2( 290, 550 )
+fixed_position_x = 19005440
+fixed_position_y = 36044800
 
 [node name="MidBiscuit" parent="Pieces" instance=ExtResource( 2 )]
-position = Vector2( 339, 511 )
-fixed_position_x = 22216704
-fixed_position_y = 33488896
+position = Vector2( 340, 550 )
+fixed_position_x = 22282240
+fixed_position_y = 36044800
 
 [node name="RightBiscuit" parent="Pieces" instance=ExtResource( 2 )]
-position = Vector2( 384, 513 )
-fixed_position_x = 25165824
-fixed_position_y = 33619968
+position = Vector2( 390, 550 )
+fixed_position_x = 25559040
+fixed_position_y = 36044800
 
 [node name="Spawns" type="Node" parent="."]
 
