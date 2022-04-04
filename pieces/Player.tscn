@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://pieces/generic/StoppablePiece.tscn" type="PackedScene" id=1]
 [ext_resource path="res://pieces/Player.gd" type="Script" id=2]
-[ext_resource path="res://addons/godot-rollback-netcode/NetworkTimer.gd" type="Script" id=3]
 
 [sub_resource type="SGCircleShape2D" id=1]
 radius = 983040
@@ -26,10 +25,3 @@ collision_mask = 32
 
 [node name="SGCollisionShape2D" type="SGCollisionShape2D" parent="Magnet" index="0"]
 shape = SubResource( 2 )
-
-[node name="NetworkTimer" type="Node" parent="." index="3"]
-script = ExtResource( 3 )
-one_shot = true
-wait_ticks = 20
-
-[connection signal="timeout" from="NetworkTimer" to="." method="_on_NetworkTimer_timeout"]

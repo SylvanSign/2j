@@ -5,6 +5,8 @@ const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
 export(bool) var logging_enabled: = false
 
+onready var timer = $NetworkTimer
+
 onready var main_menu = $Menu/MainMenu
 onready var connection_panel = $Menu/ConnectionPanel
 onready var host_field = $Menu/ConnectionPanel/GridContainer/HostField
@@ -16,19 +18,14 @@ onready var center_line = $Board/Center/CenterColor
 
 onready var top_player := $Pieces/TopPlayer
 onready var bot_player := $Pieces/BotPlayer
+onready var top_goal := $Board/TopGoal
+onready var bot_goal := $Board/BotGoal
 onready var ball := $Pieces/Ball
 onready var left_biscuit := $Pieces/LeftBiscuit
 onready var mid_biscuit := $Pieces/MidBiscuit
 onready var right_biscuit := $Pieces/RightBiscuit
 
-func reset_pieces() -> void:
-	if is_instance_valid(top_player):
-		top_player.reset($Spawns/Players/TopPlayerMid.fixed_position)
-	bot_player.reset($Spawns/Players/BotPlayerMid.fixed_position)
-	ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
-	left_biscuit.reset($Spawns/Biscuits/LeftBiscuit.fixed_position)
-	mid_biscuit.reset($Spawns/Biscuits/MidBiscuit.fixed_position)
-	right_biscuit.reset($Spawns/Biscuits/RightBiscuit.fixed_position)
+var just_scored := false
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
@@ -57,10 +54,31 @@ func init_pieces(players: Array) -> void:
 	$Pieces/LeftBiscuit.players = players
 	$Pieces/MidBiscuit.players = players
 	$Pieces/RightBiscuit.players = players
-	$Board/BotGoal.players = players
+	bot_goal.players = players
 	var top_goal_players := players.duplicate()
 	top_goal_players.invert()
-	$Board/TopGoal.players = top_goal_players
+	top_goal.players = top_goal_players
+	bot_goal.other_goal = top_goal
+	top_goal.other_goal = bot_goal
+
+func reset_pieces() -> void:
+	get_tree().paused = true
+	just_scored = true
+	bot_player.reset($Spawns/Players/BotPlayerMid.fixed_position)
+	ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
+	left_biscuit.reset($Spawns/Biscuits/LeftBiscuit.fixed_position)
+	mid_biscuit.reset($Spawns/Biscuits/MidBiscuit.fixed_position)
+	right_biscuit.reset($Spawns/Biscuits/RightBiscuit.fixed_position)
+
+	if is_instance_valid(top_player):
+		top_player.reset($Spawns/Players/TopPlayerMid.fixed_position)
+	else:
+		bot_player.set_collision_mask_bit(1, false)
+
+	top_goal.just_scored = false
+	bot_goal.just_scored = false
+	just_scored = false
+	get_tree().paused = false
 
 func _on_ServerButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
@@ -168,18 +186,44 @@ func _on_LocalButton_pressed() -> void:
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()
 
+func score_effects() -> void:
+	just_scored = true
+	timer.start()
+
 func _on_TopGoal_goal() -> void:
-	print('top goal!')
-	reset_pieces()
+	if not just_scored:
+		score_effects()
 
 func _on_BotGoal_goal() -> void:
-	print('bot goal!')
-	reset_pieces()
+	if not just_scored:
+		score_effects()
 
 func _on_TopPlayer_double_biscuit(player) -> void:
-	print('top double biscuit!')
-	reset_pieces()
+	if not just_scored:
+		bot_goal.score()
+		score_effects()
 
 func _on_BotPlayer_double_biscuit(player) -> void:
-	print('bot double biscuit!')
-	reset_pieces()
+	if not just_scored:
+		top_goal.score()
+		score_effects()
+
+func _save_state() -> Dictionary:
+	return {
+		just_scored = just_scored,
+		top_score = top_goal.score,
+		bot_score = bot_goal.score,
+	}
+
+func _load_state(state: Dictionary) -> void:
+	just_scored = state['just_scored']
+	top_goal.set_score(state['top_score'])
+	bot_goal.set_score(state['bot_score'])
+
+func _on_NetworkTimer_timeout() -> void:
+	if top_goal.score > 8:
+		print('Bot won!')
+	elif bot_goal.score > 8:
+		print('Top won!')
+	else:
+		reset_pieces()

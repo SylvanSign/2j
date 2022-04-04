@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://pieces/Ball.gd"
 }, {
+"base": "SGArea2D",
+"class": "Goal",
+"language": "GDScript",
+"path": "res://board/Goal.gd"
+}, {
 "base": "AnimationPlayer",
 "class": "NetworkAnimationPlayer",
 "language": "GDScript",
@@ -46,6 +51,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Ball": "",
+"Goal": "",
 "NetworkAnimationPlayer": "",
 "NetworkRandomNumberGenerator": "",
 "NetworkTimer": "",

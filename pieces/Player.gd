@@ -5,7 +5,6 @@ class_name Player
 signal double_biscuit(player)
 
 onready var magnet := $Magnet
-onready var timer := $NetworkTimer
 
 const ACCELERATION := 65536 * 6
 var input_prefix   := "player1_"
@@ -48,7 +47,7 @@ func _network_process(input: Dictionary) -> void:
 		biscuits_attached += 1
 		if biscuits_attached > 1:
 			stop()
-			timer.start()
+			emit_signal('double_biscuit', self)
 
 	._network_process(input)
 
@@ -60,7 +59,3 @@ func _save_state() -> Dictionary:
 func _load_state(state: Dictionary) -> void:
 	biscuits_attached = state['biscuits_attached']
 	._load_state(state)
-
-
-func _on_NetworkTimer_timeout() -> void:
-	emit_signal('double_biscuit', self)
