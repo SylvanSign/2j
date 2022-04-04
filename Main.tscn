@@ -149,42 +149,48 @@ position = Vector2( 340, 95 )
 fixed_position_x = 22282240
 fixed_position_y = 6225920
 
+[node name="Score" parent="Board/TopGoal/RenderLayer" index="0"]
+text = "2"
+
 [node name="BotGoal" parent="Board" instance=ExtResource( 6 )]
 position = Vector2( 340, 785 )
 fixed_position_x = 22282240
 fixed_position_y = 51445760
 
+[node name="Score" parent="Board/BotGoal/RenderLayer" index="0"]
+text = "J"
+
 [node name="Pieces" type="Node" parent="."]
 
 [node name="BotPlayer" parent="Pieces" instance=ExtResource( 5 )]
-position = Vector2( 635, 835 )
-fixed_position_x = 41615360
-fixed_position_y = 54722560
+position = Vector2( 341, 610 )
+fixed_position_x = 22347776
+fixed_position_y = 39976960
 
 [node name="TopPlayer" parent="Pieces" instance=ExtResource( 5 )]
-position = Vector2( 340, 200 )
-fixed_position_x = 22282240
-fixed_position_y = 13107200
+position = Vector2( 341, 561 )
+fixed_position_x = 22347776
+fixed_position_y = 36765696
 
 [node name="Ball" parent="Pieces" instance=ExtResource( 1 )]
-position = Vector2( 595, 795 )
-fixed_position_x = 38993920
-fixed_position_y = 52101120
+position = Vector2( 302, 636 )
+fixed_position_x = 19791872
+fixed_position_y = 41680896
 
 [node name="LeftBiscuit" parent="Pieces" instance=ExtResource( 2 )]
-position = Vector2( 169, 440 )
-fixed_position_x = 11075584
-fixed_position_y = 28835840
+position = Vector2( 288, 512 )
+fixed_position_x = 18874368
+fixed_position_y = 33554432
 
 [node name="MidBiscuit" parent="Pieces" instance=ExtResource( 2 )]
-position = Vector2( 340, 440 )
-fixed_position_x = 22282240
-fixed_position_y = 28835840
+position = Vector2( 339, 511 )
+fixed_position_x = 22216704
+fixed_position_y = 33488896
 
 [node name="RightBiscuit" parent="Pieces" instance=ExtResource( 2 )]
-position = Vector2( 510, 440 )
-fixed_position_x = 33423360
-fixed_position_y = 28835840
+position = Vector2( 384, 513 )
+fixed_position_x = 25165824
+fixed_position_y = 33619968
 
 [node name="Spawns" type="Node" parent="."]
 
@@ -292,7 +298,6 @@ fixed_position_y = 28835840
 [node name="Menu" type="CanvasLayer" parent="."]
 
 [node name="MainMenu" type="HBoxContainer" parent="Menu"]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -504,3 +509,6 @@ script = ExtResource( 9 )
 [connection signal="pressed" from="Menu/ConnectionPanel/GridContainer/ClientButton" to="." method="_on_ClientButton_pressed"]
 [connection signal="pressed" from="Menu/ResetButton" to="." method="_on_ResetButton_pressed"]
 [connection signal="timeout" from="NetworkTimer" to="." method="_on_NetworkTimer_timeout"]
+
+[editable path="Board/TopGoal"]
+[editable path="Board/BotGoal"]

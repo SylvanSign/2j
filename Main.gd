@@ -28,6 +28,7 @@ onready var left_biscuit := $Pieces/LeftBiscuit
 onready var mid_biscuit := $Pieces/MidBiscuit
 onready var right_biscuit := $Pieces/RightBiscuit
 
+var online := true
 var just_scored = null
 
 enum { TOP = 1, BOT = 2 }
@@ -67,51 +68,51 @@ func init_pieces(players: Array) -> void:
 	bot_goal.other_goal = top_goal
 	top_goal.other_goal = bot_goal
 
-func reset_pieces(side: int) -> void:
+func setup_bot_kickoff(kickoff_side: int) -> void:
+	match kickoff_side:
+		LEFT:
+			ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
+			bot_player.reset($Spawns/Players/BotPlayerLeft.fixed_position)
+		RIGHT:
+			ball.reset($Spawns/Ball/BallBotRight.fixed_position)
+			bot_player.reset($Spawns/Players/BotPlayerRight.fixed_position)
+
+func setup_top_kickoff(kickoff_side: int) -> void:
+	match kickoff_side:
+		LEFT:
+			ball.reset($Spawns/Ball/BallTopLeft.fixed_position)
+			top_player.reset($Spawns/Players/TopPlayerLeft.fixed_position)
+		RIGHT:
+			ball.reset($Spawns/Ball/BallTopRight.fixed_position)
+			top_player.reset($Spawns/Players/TopPlayerRight.fixed_position)
+
+func reset_pieces(half: int) -> void:
 	left_biscuit.reset($Spawns/Biscuits/LeftBiscuit.fixed_position)
 	mid_biscuit.reset($Spawns/Biscuits/MidBiscuit.fixed_position)
 	right_biscuit.reset($Spawns/Biscuits/RightBiscuit.fixed_position)
 
 	var kickoff_side: int = rng.randi_range(LEFT, RIGHT)
-	# handle online mode
-	if is_instance_valid(top_player):
-		match just_scored:
+	if online:
+		match half:
 			TOP:
 				top_player.reset($Spawns/Players/TopPlayerMid.fixed_position)
-				match kickoff_side:
-					LEFT:
-						ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
-						bot_player.reset($Spawns/Players/BotPlayerLeft.fixed_position)
-					RIGHT:
-						ball.reset($Spawns/Ball/BallBotRight.fixed_position)
-						bot_player.reset($Spawns/Players/BotPlayerRight.fixed_position)
-
+				setup_bot_kickoff(kickoff_side)
 			BOT:
 				bot_player.reset($Spawns/Players/BotPlayerMid.fixed_position)
-				match kickoff_side:
-					LEFT:
-						ball.reset($Spawns/Ball/BallTopLeft.fixed_position)
-						top_player.reset($Spawns/Players/TopPlayerLeft.fixed_position)
-					RIGHT:
-						ball.reset($Spawns/Ball/BallTopRight.fixed_position)
-						top_player.reset($Spawns/Players/TopPlayerRight.fixed_position)
-	# handle singleplayer practice mode
+				setup_top_kickoff(kickoff_side)
 	else:
-		match kickoff_side:
-			LEFT:
-				ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
-				bot_player.reset($Spawns/Players/BotPlayerLeft.fixed_position)
-			RIGHT:
-				ball.reset($Spawns/Ball/BallBotRight.fixed_position)
-				bot_player.reset($Spawns/Players/BotPlayerRight.fixed_position)
+		setup_bot_kickoff(kickoff_side)
 		bot_player.set_collision_mask_bit(1, false)
 
 	top_goal.just_scored = false
 	bot_goal.just_scored = false
 	just_scored = null
 
-remote func set_seed(rng_seed: int) -> void:
+sync func set_seed(rng_seed: int) -> void:
 	rng.set_seed(rng_seed)
+	top_goal.set_score(0)
+	bot_goal.set_score(0)
+	reset_pieces(rng.randi_range(TOP, BOT))
 
 func _on_ServerButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
@@ -145,7 +146,7 @@ func _on_network_peer_connected(peer_id: int):
 		rpc('set_seed', rng.get_seed())
 		# Give a little time to get ping data.
 #		yield(get_tree().create_timer(2.0), "timeout")
-		yield(get_tree().create_timer(2.0), "timeout") # TODO should be 2.0 sec, like line above
+		yield(get_tree().create_timer(2.0), "timeout")
 		SyncManager.start()
 
 func _on_network_peer_disconnected(peer_id: int):
@@ -167,7 +168,6 @@ func _on_SyncManager_sync_started() -> void:
 	message_label.text = "Started!"
 
 	if logging_enabled and not SyncReplay.active:
-		print(logging_enabled)
 		var dir = Directory.new()
 		if not dir.dir_exists(LOG_FILE_DIRECTORY):
 			dir.make_dir(LOG_FILE_DIRECTORY)
@@ -214,10 +214,11 @@ func _on_OnlineButton_pressed() -> void:
 	SyncManager.reset_network_adaptor()
 
 func _on_LocalButton_pressed() -> void:
-	rng.randomize()
-	bot_player.set_collision_mask_bit(1, false)
-	center_line.visible = false
+	online = false
 	top_player.queue_free()
+	rng.randomize()
+	set_seed(rng.get_seed())
+	center_line.visible = false
 	main_menu.visible = false
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()
