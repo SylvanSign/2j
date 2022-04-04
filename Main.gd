@@ -121,7 +121,7 @@ func _on_ServerButton_pressed() -> void:
 	get_tree().network_peer = peer
 	main_menu.visible = false
 	connection_panel.visible = false
-	message_label.text = "Listening..."
+	show_banner("Listening...")
 
 func _on_ClientButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
@@ -129,10 +129,10 @@ func _on_ClientButton_pressed() -> void:
 	get_tree().network_peer = peer
 	main_menu.visible = false
 	connection_panel.visible = false
-	message_label.text = "Connecting..."
+	show_banner("Connecting...")
 
 func _on_network_peer_connected(peer_id: int):
-	message_label.text = "Connected!"
+	show_banner("Connected!")
 	SyncManager.add_peer(peer_id)
 
 	bot_player.set_network_master(1)
@@ -142,7 +142,7 @@ func _on_network_peer_connected(peer_id: int):
 		top_player.set_network_master(get_tree().get_network_unique_id())
 
 	if get_tree().is_network_server():
-		message_label.text = "Starting..."
+		show_banner("Starting...")
 		rng.randomize()
 		rpc('set_seed', rng.get_seed())
 		# Give a little time to get ping data.
@@ -151,7 +151,7 @@ func _on_network_peer_connected(peer_id: int):
 		SyncManager.start()
 
 func _on_network_peer_disconnected(peer_id: int):
-	message_label.text = "Disconnected"
+	show_banner("Disconnected")
 	SyncManager.remove_peer(peer_id)
 
 func _on_server_disconnected() -> void:
@@ -166,7 +166,9 @@ func _on_ResetButton_pressed() -> void:
 	get_tree().reload_current_scene()
 
 func _on_SyncManager_sync_started() -> void:
-	message_label.text = "Started!"
+	show_banner("Started!")
+	yield(get_tree().create_timer(1), 'timeout')
+	hide_banner()
 
 	if logging_enabled and not SyncReplay.active:
 		var dir = Directory.new()
@@ -197,7 +199,7 @@ func _on_SyncManager_sync_regained() -> void:
 	sync_lost_label.visible = false
 
 func _on_SyncManager_sync_error(msg: String) -> void:
-	message_label.text = "Fatal sync error: " + msg
+	show_banner("Fatal sync error: " + msg)
 	sync_lost_label.visible = false
 
 	var peer = get_tree().network_peer
