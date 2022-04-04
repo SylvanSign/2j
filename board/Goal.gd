@@ -38,9 +38,10 @@ func goal(piece: StoppablePiece) -> void:
 		emit_signal('goal')
 
 func score() -> void:
-	just_scored = true
-	score += 1
-	label.text = str(score)
+	if not other_goal.just_scored:
+		just_scored = true
+		score += 1
+		label.text = str(score)
 
 func _save_state() -> Dictionary:
 	return {

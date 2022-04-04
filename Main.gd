@@ -3,6 +3,8 @@ extends Node
 const DummyNetworkAdaptor = preload("res://addons/godot-rollback-netcode/DummyNetworkAdaptor.gd")
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
+const SCORE_TO_WIN := 1
+
 export(bool) var logging_enabled: = false
 
 onready var timer = $NetworkTimer
@@ -25,7 +27,12 @@ onready var left_biscuit := $Pieces/LeftBiscuit
 onready var mid_biscuit := $Pieces/MidBiscuit
 onready var right_biscuit := $Pieces/RightBiscuit
 
-var just_scored := false
+var just_scored = null
+
+enum {
+	TOP = 1,
+	BOT = 2,
+}
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
@@ -61,24 +68,31 @@ func init_pieces(players: Array) -> void:
 	bot_goal.other_goal = top_goal
 	top_goal.other_goal = bot_goal
 
-func reset_pieces() -> void:
-	get_tree().paused = true
-	just_scored = true
-	bot_player.reset($Spawns/Players/BotPlayerMid.fixed_position)
-	ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
+func reset_pieces(side: int) -> void:
 	left_biscuit.reset($Spawns/Biscuits/LeftBiscuit.fixed_position)
 	mid_biscuit.reset($Spawns/Biscuits/MidBiscuit.fixed_position)
 	right_biscuit.reset($Spawns/Biscuits/RightBiscuit.fixed_position)
 
+	# handle online mode
 	if is_instance_valid(top_player):
-		top_player.reset($Spawns/Players/TopPlayerMid.fixed_position)
+		match just_scored:
+			TOP:
+				ball.reset($Spawns/Ball/BallBotRight.fixed_position)
+				bot_player.reset($Spawns/Players/BotPlayerRight.fixed_position)
+				top_player.reset($Spawns/Players/TopPlayerMid.fixed_position)
+			BOT:
+				ball.reset($Spawns/Ball/BallTopLeft.fixed_position)
+				top_player.reset($Spawns/Players/TopPlayerLeft.fixed_position)
+				bot_player.reset($Spawns/Players/BotPlayerMid.fixed_position)
+	# handle singleplayer practice mode
 	else:
+		ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
+		bot_player.reset($Spawns/Players/BotPlayerLeft.fixed_position)
 		bot_player.set_collision_mask_bit(1, false)
 
 	top_goal.just_scored = false
 	bot_goal.just_scored = false
-	just_scored = false
-	get_tree().paused = false
+	just_scored = null
 
 func _on_ServerButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
@@ -186,27 +200,27 @@ func _on_LocalButton_pressed() -> void:
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()
 
-func score_effects() -> void:
-	just_scored = true
+func score_effects(side: int) -> void:
+	just_scored = side
 	timer.start()
 
 func _on_TopGoal_goal() -> void:
 	if not just_scored:
-		score_effects()
+		score_effects(BOT)
 
 func _on_BotGoal_goal() -> void:
 	if not just_scored:
-		score_effects()
+		score_effects(TOP)
 
 func _on_TopPlayer_double_biscuit(player) -> void:
 	if not just_scored:
-		bot_goal.score()
-		score_effects()
+		top_goal.score()
+		score_effects(BOT)
 
 func _on_BotPlayer_double_biscuit(player) -> void:
 	if not just_scored:
-		top_goal.score()
-		score_effects()
+		bot_goal.score()
+		score_effects(TOP)
 
 func _save_state() -> Dictionary:
 	return {
@@ -221,9 +235,13 @@ func _load_state(state: Dictionary) -> void:
 	bot_goal.set_score(state['bot_score'])
 
 func _on_NetworkTimer_timeout() -> void:
-	if top_goal.score > 8:
-		print('Bot won!')
-	elif bot_goal.score > 8:
-		print('Top won!')
+	if top_goal.score >= SCORE_TO_WIN:
+		show_winner_banner('BOT')
+	elif bot_goal.score >= SCORE_TO_WIN:
+		show_winner_banner('TOP')
 	else:
-		reset_pieces()
+		reset_pieces(just_scored)
+
+func show_winner_banner(side: String) -> void:
+	$GameOverCanvas/Banner/GameOverLabel.text = side + ' WINS!'
+	$GameOverCanvas/Banner.visible = true
