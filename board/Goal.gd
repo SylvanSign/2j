@@ -2,7 +2,7 @@ tool
 extends SGArea2D
 class_name Goal
 
-signal goal # TODO use this somehow?
+signal goal(piece)
 
 var players: Array
 var other_goal: Goal
@@ -35,7 +35,7 @@ func goal(piece: StoppablePiece) -> void:
 	piece.stop()
 	if not just_scored and not other_goal.just_scored and (piece is Player or piece is Ball):
 		score()
-		emit_signal('goal')
+		emit_signal('goal', piece.name)
 
 func score() -> void:
 	if not other_goal.just_scored:

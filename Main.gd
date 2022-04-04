@@ -3,12 +3,13 @@ extends Node
 const DummyNetworkAdaptor = preload("res://addons/godot-rollback-netcode/DummyNetworkAdaptor.gd")
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
-const SCORE_TO_WIN := 9
+const SCORE_TO_WIN := 1
 
 export(bool) var logging_enabled: = false
 
 onready var timer := $NetworkTimer
 onready var rng := $NetworkRandomNumberGenerator
+onready var banner := $GameOverCanvas/Banner
 
 onready var main_menu := $Menu/MainMenu
 onready var connection_panel := $Menu/ConnectionPanel
@@ -223,39 +224,10 @@ func _on_LocalButton_pressed() -> void:
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()
 
-func score_effects(side: int) -> void:
+func score_effects(side: int, msg: String) -> void:
 	just_scored = side
+	show_banner(msg)
 	timer.start()
-
-func _on_TopGoal_goal() -> void:
-	if not just_scored:
-		score_effects(BOT)
-
-func _on_BotGoal_goal() -> void:
-	if not just_scored:
-		score_effects(TOP)
-
-func _on_TopPlayer_double_biscuit(player) -> void:
-	if not just_scored:
-		top_goal.score()
-		score_effects(BOT)
-
-func _on_BotPlayer_double_biscuit(player) -> void:
-	if not just_scored:
-		bot_goal.score()
-		score_effects(TOP)
-
-func _save_state() -> Dictionary:
-	return {
-		just_scored = just_scored,
-		top_score = top_goal.score,
-		bot_score = bot_goal.score,
-	}
-
-func _load_state(state: Dictionary) -> void:
-	just_scored = state['just_scored']
-	top_goal.set_score(state['top_score'])
-	bot_goal.set_score(state['bot_score'])
 
 func _on_NetworkTimer_timeout() -> void:
 	if top_goal.score >= SCORE_TO_WIN:
@@ -263,11 +235,56 @@ func _on_NetworkTimer_timeout() -> void:
 	elif bot_goal.score >= SCORE_TO_WIN:
 		show_banner('TOP WINS!')
 	else:
+		hide_banner()
 		reset_pieces(just_scored)
 
-func show_banner(side: String) -> void:
-	$GameOverCanvas/Banner/GameOverLabel.text = side + ' WINS!'
-	$GameOverCanvas/Banner.visible = true
+func _on_TopGoal_goal(piece_name: String) -> void:
+	if not just_scored:
+		var msg: String
+		match piece_name:
+			'Ball':
+				msg = 'BOT GOAL!'
+			_:
+				msg = 'TOP TRIPPED!'
+		score_effects(BOT, msg)
+
+func _on_BotGoal_goal(piece_name: String) -> void:
+	if not just_scored:
+		var msg: String
+		match piece_name:
+			'Ball':
+				msg = 'TOP GOAL!'
+			_:
+				msg = 'BOT TRIPPED!'
+		score_effects(TOP, msg)
+
+func _on_TopPlayer_double_biscuit(player) -> void:
+	if not just_scored:
+		top_goal.score()
+		score_effects(BOT, 'TOP ATE BISCUITS!')
+
+func _on_BotPlayer_double_biscuit(player) -> void:
+	if not just_scored:
+		bot_goal.score()
+		score_effects(TOP, 'BOT ATE BISCUITS!')
+
+func _save_state() -> Dictionary:
+	return {
+		banner_visible = banner.visible,
+		just_scored = just_scored,
+		top_score = top_goal.score,
+		bot_score = bot_goal.score,
+	}
+
+func _load_state(state: Dictionary) -> void:
+	banner.visible = state['banner_visible']
+	just_scored = state['just_scored']
+	top_goal.set_score(state['top_score'])
+	bot_goal.set_score(state['bot_score'])
+
+func show_banner(msg: String) -> void:
+	banner.get_node('GameOverLabel').text = msg
+	banner.visible = true
 
 func hide_banner() -> void:
-	$GameOverCanvas/Banner.visible = false
+	banner.visible = false
