@@ -7,16 +7,17 @@ const SCORE_TO_WIN := 9
 
 export(bool) var logging_enabled: = false
 
-onready var timer = $NetworkTimer
+onready var timer := $NetworkTimer
+onready var rng := $NetworkRandomNumberGenerator
 
-onready var main_menu = $Menu/MainMenu
-onready var connection_panel = $Menu/ConnectionPanel
-onready var host_field = $Menu/ConnectionPanel/GridContainer/HostField
-onready var port_field = $Menu/ConnectionPanel/GridContainer/PortField
-onready var message_label = $Menu/CenterContainer/MessageLabel
-onready var sync_lost_label = $Menu/SyncLostLabel
-onready var reset_button = $Menu/ResetButton
-onready var center_line = $Board/Center/CenterColor
+onready var main_menu := $Menu/MainMenu
+onready var connection_panel := $Menu/ConnectionPanel
+onready var host_field := $Menu/ConnectionPanel/GridContainer/HostField
+onready var port_field := $Menu/ConnectionPanel/GridContainer/PortField
+onready var message_label := $Menu/CenterContainer/MessageLabel
+onready var sync_lost_label := $Menu/SyncLostLabel
+onready var reset_button := $Menu/ResetButton
+onready var center_line := $Board/Center/CenterColor
 
 onready var top_player := $Pieces/TopPlayer
 onready var bot_player := $Pieces/BotPlayer
@@ -29,10 +30,8 @@ onready var right_biscuit := $Pieces/RightBiscuit
 
 var just_scored = null
 
-enum {
-	TOP = 1,
-	BOT = 2,
-}
+enum { TOP = 1, BOT = 2 }
+enum { LEFT, RIGHT }
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
@@ -73,26 +72,46 @@ func reset_pieces(side: int) -> void:
 	mid_biscuit.reset($Spawns/Biscuits/MidBiscuit.fixed_position)
 	right_biscuit.reset($Spawns/Biscuits/RightBiscuit.fixed_position)
 
+	var kickoff_side: int = rng.randi_range(LEFT, RIGHT)
 	# handle online mode
 	if is_instance_valid(top_player):
 		match just_scored:
 			TOP:
-				ball.reset($Spawns/Ball/BallBotRight.fixed_position)
-				bot_player.reset($Spawns/Players/BotPlayerRight.fixed_position)
 				top_player.reset($Spawns/Players/TopPlayerMid.fixed_position)
+				match kickoff_side:
+					LEFT:
+						ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
+						bot_player.reset($Spawns/Players/BotPlayerLeft.fixed_position)
+					RIGHT:
+						ball.reset($Spawns/Ball/BallBotRight.fixed_position)
+						bot_player.reset($Spawns/Players/BotPlayerRight.fixed_position)
+
 			BOT:
-				ball.reset($Spawns/Ball/BallTopLeft.fixed_position)
-				top_player.reset($Spawns/Players/TopPlayerLeft.fixed_position)
 				bot_player.reset($Spawns/Players/BotPlayerMid.fixed_position)
+				match kickoff_side:
+					LEFT:
+						ball.reset($Spawns/Ball/BallTopLeft.fixed_position)
+						top_player.reset($Spawns/Players/TopPlayerLeft.fixed_position)
+					RIGHT:
+						ball.reset($Spawns/Ball/BallTopRight.fixed_position)
+						top_player.reset($Spawns/Players/TopPlayerRight.fixed_position)
 	# handle singleplayer practice mode
 	else:
-		ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
-		bot_player.reset($Spawns/Players/BotPlayerLeft.fixed_position)
+		match kickoff_side:
+			LEFT:
+				ball.reset($Spawns/Ball/BallBotLeft.fixed_position)
+				bot_player.reset($Spawns/Players/BotPlayerLeft.fixed_position)
+			RIGHT:
+				ball.reset($Spawns/Ball/BallBotRight.fixed_position)
+				bot_player.reset($Spawns/Players/BotPlayerRight.fixed_position)
 		bot_player.set_collision_mask_bit(1, false)
 
 	top_goal.just_scored = false
 	bot_goal.just_scored = false
 	just_scored = null
+
+remote func set_seed(rng_seed: int) -> void:
+	rng.set_seed(rng_seed)
 
 func _on_ServerButton_pressed() -> void:
 	var peer = NetworkedMultiplayerENet.new()
@@ -122,9 +141,11 @@ func _on_network_peer_connected(peer_id: int):
 
 	if get_tree().is_network_server():
 		message_label.text = "Starting..."
+		rng.randomize()
+		rpc('set_seed', rng.get_seed())
 		# Give a little time to get ping data.
 #		yield(get_tree().create_timer(2.0), "timeout")
-		yield(get_tree().create_timer(0.2), "timeout") # TODO should be 2.0 sec, like line above
+		yield(get_tree().create_timer(2.0), "timeout") # TODO should be 2.0 sec, like line above
 		SyncManager.start()
 
 func _on_network_peer_disconnected(peer_id: int):
@@ -193,6 +214,7 @@ func _on_OnlineButton_pressed() -> void:
 	SyncManager.reset_network_adaptor()
 
 func _on_LocalButton_pressed() -> void:
+	rng.randomize()
 	bot_player.set_collision_mask_bit(1, false)
 	center_line.visible = false
 	top_player.queue_free()
@@ -236,12 +258,15 @@ func _load_state(state: Dictionary) -> void:
 
 func _on_NetworkTimer_timeout() -> void:
 	if top_goal.score >= SCORE_TO_WIN:
-		show_winner_banner('BOT')
+		show_banner('BOT WINS!')
 	elif bot_goal.score >= SCORE_TO_WIN:
-		show_winner_banner('TOP')
+		show_banner('TOP WINS!')
 	else:
 		reset_pieces(just_scored)
 
-func show_winner_banner(side: String) -> void:
+func show_banner(side: String) -> void:
 	$GameOverCanvas/Banner/GameOverLabel.text = side + ' WINS!'
 	$GameOverCanvas/Banner.visible = true
+
+func hide_banner() -> void:
+	$GameOverCanvas/Banner.visible = false
