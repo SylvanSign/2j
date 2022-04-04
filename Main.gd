@@ -3,7 +3,7 @@ extends Node
 const DummyNetworkAdaptor = preload("res://addons/godot-rollback-netcode/DummyNetworkAdaptor.gd")
 const LOG_FILE_DIRECTORY = 'user://detailed_logs'
 
-const SCORE_TO_WIN := 1
+const SCORE_TO_WIN := 9
 
 export(bool) var logging_enabled: = false
 
