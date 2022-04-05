@@ -53,9 +53,7 @@ func _ready() -> void:
 					_on_ServerButton_pressed()
 				'join':
 					_on_ClientButton_pressed()
-			init_pieces([bot_player, top_player])
 		else:
-			init_pieces([bot_player])
 			_on_LocalButton_pressed()
 
 func init_pieces(players: Array) -> void:
@@ -121,6 +119,7 @@ func _on_ServerButton_pressed() -> void:
 	get_tree().network_peer = peer
 	main_menu.visible = false
 	connection_panel.visible = false
+	init_pieces([bot_player, top_player])
 	show_banner("Listening...")
 
 func _on_ClientButton_pressed() -> void:
@@ -129,6 +128,7 @@ func _on_ClientButton_pressed() -> void:
 	get_tree().network_peer = peer
 	main_menu.visible = false
 	connection_panel.visible = false
+	init_pieces([bot_player, top_player])
 	show_banner("Connecting...")
 
 func _on_network_peer_connected(peer_id: int):
@@ -170,7 +170,7 @@ func _on_SyncManager_sync_started() -> void:
 	yield(get_tree().create_timer(1), 'timeout')
 	hide_banner()
 
-	if logging_enabled and not SyncReplay.active:
+	if logging_enabled:
 		var dir = Directory.new()
 		if not dir.dir_exists(LOG_FILE_DIRECTORY):
 			dir.make_dir(LOG_FILE_DIRECTORY)
@@ -183,7 +183,7 @@ func _on_SyncManager_sync_started() -> void:
 			datetime['hour'],
 			datetime['minute'],
 			datetime['second'],
-			get_tree().get_network_unique_id(),
+			SyncManager.network_adaptor.get_network_unique_id(),
 		]
 
 		SyncManager.start_logging(LOG_FILE_DIRECTORY + '/' + log_file_name)
@@ -223,6 +223,7 @@ func _on_LocalButton_pressed() -> void:
 	set_seed(rng.get_seed())
 	center_line.visible = false
 	main_menu.visible = false
+	init_pieces([bot_player])
 	SyncManager.network_adaptor = DummyNetworkAdaptor.new()
 	SyncManager.start()
 
